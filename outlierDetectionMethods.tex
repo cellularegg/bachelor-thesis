@@ -1,0 +1,74 @@
+\chapter{Outlier detection}
+Outliers can be categorized as point outliers or subsequence outliers.
+\subsubsection{Point outliers}
+A point outlier is a single datapoint that strongly varies from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020}
+
+\subsubsection{Subsequence outliers}
+Subsequence outliers are multiple consecutive datapoints that strongly vary from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020}\\\\
+Furthermore outliers can be divided into local and global outliers. 
+\subsubsection{Local outliers}
+A local outlier has a greater variance to its direct neighbouring datapoints (previous and next one) \cite{blazquez-garciaReviewOutlierAnomaly2020}
+
+\subsubsection{Global outliers}
+Whereas a global outlier varies more in regard to all datapoints.
+To do: Add charts that visualize point, subsequence, local and global outliers
+\cite{blazquez-garciaReviewOutlierAnomaly2020}
+
+\section{Outlier detection approaches}
+Outlier detection methods can be divided into the following groups
+\subsubsection{Statistical}
+For statistical outlier detection, historical data is taken to develop a model that pictures the expected behaviour of the data. An example of a statistical outlier detection is the threshold based method described in section \ref{threshold-based-outlier-detection} \cite{cookAnomalyDetectionIoT2020, giannoniAnomalyDetectionModels2018}
+
+\subsubsection{Distance based}
+For this approach a distance metric needs to be defined, (e.g. Euclidean distance). Then each datapoint is compared to the data preceding it. The greater the distance between the current and previous datapoints the greater the probability of an anomaly. \cite{cookAnomalyDetectionIoT2020, giannoniAnomalyDetectionModels2018, chandolaAnomalyDetectionSurvey2009}
+
+\subsubsection{Clustering}
+Clustering also requires a set of historical data in order to train the clustering model. Usually the data is clustered into two clusters: normal data and anomalous data. Depending on the distance of a new datapoint to the "normal" and the "anomalous" cluster it is classified.
+\cite{cookAnomalyDetectionIoT2020, giannoniAnomalyDetectionModels2018, chandolaAnomalyDetectionSurvey2009}
+\subsubsection{Predictive}
+In this approach a prediction model needs to be developed, based on previous data. The prediction of this model is then compared with the actual datapoint (new data, which was not used in training the model). If the actual datapoint differs too much from the prediction it is labelled as an anomaly. \cite{cookAnomalyDetectionIoT2020, giannoniAnomalyDetectionModels2018}
+
+
+\subsubsection{Ensemble}
+as the word ensemble suggests, this is a collection of outlier detection methods that use a specific vote mechanism to determine whether a datapoint is faulty or normal. For example using the majority vote system and a statistical, distance based and predictive method to detect outliers. If at least two methods flag a datapoint as an outlier the ensemble reports it as an outlier as well. If only one method reports it as an outlier the ensemble does not flag it as an anomaly.
+\cite{cookAnomalyDetectionIoT2020}
+
+\section{Threshold based outlier detection} \label{threshold-based-outlier-detection}
+Threshold based detection methods are able to identify outliers based on a given threshold $\tau$. These Methods can be described with the following formula
+$$
+|x_t - \hat{x}_t | > \tau \text{ \cite{blazquez-garciaReviewOutlierAnomaly2020}}
+$$
+Where $x_t$ is the actual value and $\hat{x}_t$ is the expected value and $\tau$ is a given threshold.\\
+Methods to calculate $\hat{x}_t$ will be described in the following sections. Furthermore $\hat{x}_t$ can be calculated using the entire data series or with subsets (of equal length) of the entire data series. This means $\hat{x}_t$ can be either calculated for the whole data series or for just a segment.\\
+Depending on the sensitivity wanted for outlier detection an appropriate $\tau$ needs to be chosen. The greater $\tau$ is the fewer outliers will be detected. The smaller $\tau$ is the more outliers will be identified.  \cite{blazquez-garciaReviewOutlierAnomaly2020}
+
+\subsubsection{Mean}
+$$
+\text{mean} = \overline{x} = \frac{1}{n} \sum^n_{t=0}x_t
+$$
+Where $n$ is the total number of samples. Using the mean as an expected value is not robust to outliers, because the median is not as robust as the mean in hindsight to outliers. To calculate the mean all datapoints of a series must be summed up and then divided by the number of datapoints.
+\subsubsection{Median}
+If $n$ is odd:
+$$
+median(x) = x_{(n+1)/2}
+$$
+If $n$ is even:
+$$
+median(x) = \frac{x_{n/2} + x_{(n+1)/2}}{2}
+$$
+Where $x$ is a dataset of $n$ elements ordered from smallest to largest\\
+($x_1 \leq x_2 \leq x_3 \leq \ldots \leq x_{n-2} \leq x_{n-1} \leq x_n$)
+\cite{blazquez-garciaReviewOutlierAnomaly2020}
+To calculate the median all values must be sorted from smallest to largest. If the number of datapoints is odd then the most center datapoint is the Median (e.g. if the series consist of 7 values the third value is the median). If the number of datapoints is even then the median is the mean of the two datapoints in the center.
+\subsubsection{Median Absolute Deviation (MAD)}
+The Median Absolute Deviation 
+$$
+MAD = median(|x_t - median(x)|)
+$$
+$MAD$ is a more robust (regarding outliers) way to calculate the deviation of a dataset. To calculate the $MAD$ firstly the median of the dataset must be calculated. Then the absolute difference between $x_t$ and the median of the dataset is calculated. The Median of all differences results in the $MAD$
+\cite{leysDetectingOutliersNot2013, mehrangOutlierDetectionWeight2015}
+
+
+
+
+

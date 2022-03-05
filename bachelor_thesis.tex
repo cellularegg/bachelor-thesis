@@ -1,0 +1,78 @@
+\documentclass[Bachelor, BIF, english]{twbook}
+
+\usepackage[T1]{fontenc}
+% Hier kann je nach Betriebssystem eine der folgenden Optionen notwendig sein, um die Umlaute korrekt wiederzugeben:
+% utf8, latin, applemac
+%%\usepackage[ansinew]{inputenc}
+\usepackage[utf8]{inputenc}
+% Die nachfolgenden 2 Pakete stellen sonst nicht benötigte Features zur Verfügung
+%%\usepackage{blindtext,dtklogos}
+\usepackage{blindtext, dtk-logos}
+\usepackage{cite}
+
+%-------------------------------- for algorithms
+%\usepackage{fullpage}
+%\usepackage{times}
+%\usepackage{fancyhdr,graphicx,amsmath,amssymb}
+%\usepackage[ruled,vlined]{algorithm2e}
+%\include{pythonlisting}
+
+
+\usepackage{algorithm}
+\usepackage[noend]{algpseudocode}
+%--------------------------------
+
+%-------------------------------- for code highlighting
+\usepackage{minted}
+%\usepackage{xcolor}
+\definecolor{LightGray}{gray}{0.9}
+\usemintedstyle{borland}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+%--------------------------------
+\usepackage{physics}
+
+
+%-------------------------------- for commenting
+%--- https://tex.stackexchange.com/questions/9796/how-to-add-todo-notes
+\usepackage{xargs}                      % Use more than one optional parameter in a new commands
+%\usepackage[pdftex,dvipsnames]{xcolor}
+\usepackage[colorinlistoftodos,prependcaption,textsize=tiny]{todonotes}
+\newcommandx{\unsure}[2][1=]{\todo[linecolor=red,backgroundcolor=red!25,bordercolor=red,#1]{#2}}
+\newcommandx{\change}[2][1=]{\todo[linecolor=blue,backgroundcolor=blue!25,bordercolor=blue,#1]{#2}}
+%\newcommandx{\info}[2][1=]{\todo[linecolor=OliveGreen,backgroundcolor=OliveGreen!25,bordercolor=OliveGreen,#1]{#2}}
+\newcommandx{\improvement}[2][1=]{\todo[linecolor=Plum,backgroundcolor=Plum!25,bordercolor=Plum,#1]{#2}}
+%\newcommandx{\thiswillnotshow}[2][1=]{\todo[disable,#1]{#2}}
+%-------------------------------- 
+
+
+%-------------------------------- for UML
+\usepackage[]{pgf-umlcd}
+
+%-------------------------------- 
+
+\title{Anomaly detection in data for data cleansing}
+% \extratitle{Der Untertietel}
+\author{David Zelenay}
+\studentnumber{000000000000}
+\supervisor{Degree First Name Surname}
+\place{Vienna}
+\kurzfassung{
+    \todo{Change this}
+    TODO Add Kurzfassung
+}
+\outline{
+    \todo{Change this}
+    This paper analyzes methods for anomaly detection to cleanse data. An overview of some key features of data quality is provided in the beginning. The difference between data cleaning and data cleansing is elaborated. Additionally a few methods for anomaly detection (mainly outlier detection) are outlined. The hypothesis of this paper is: Which characteristics define data quality, with regard to IoT (Internet of Things) Sensors? Which methods are there to detect and clean or cleanse faulty data?
+}
+\begin{document}
+\maketitle
+\include{introduction.tex}
+\input{dataCleansingAndCleaning.tex}
+\input{outlierDetectionMethods.tex}
+\input{conclusion.tex}
+\input{backmatter.tex}
+
+\end{document}
