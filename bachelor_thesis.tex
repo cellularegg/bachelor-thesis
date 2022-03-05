@@ -1,8 +1,6 @@
 \documentclass[Bachelor, BIF, english]{twbook}
 
 \usepackage[T1]{fontenc}
-% Hier kann je nach Betriebssystem eine der folgenden Optionen notwendig sein, um die Umlaute korrekt wiederzugeben:
-% utf8, latin, applemac
 %%\usepackage[ansinew]{inputenc}
 \usepackage[utf8]{inputenc}
 % Die nachfolgenden 2 Pakete stellen sonst nicht benötigte Features zur Verfügung
@@ -69,10 +67,12 @@
 }
 \begin{document}
 \maketitle
-\include{introduction.tex}
-\input{dataCleansingAndCleaning.tex}
-\input{outlierDetectionMethods.tex}
-\input{conclusion.tex}
-\input{backmatter.tex}
+\include{chapters/structure.tex}
+
+\include{chapters/introduction.tex}
+\input{chapters/dataCleansingAndCleaning.tex}
+\input{chapters/outlierDetectionMethods.tex}
+\input{chapters/conclusion.tex}
+\input{chapters/backmatter.tex}
 
 \end{document}

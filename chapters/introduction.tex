@@ -16,18 +16,18 @@ The accuracy of data describes the exactness. Example for possible data which de
 \subsubsection{Consistency}
 One example for consistency would be, if the data interval is equal. For example there should be a datapoint every ten seconds. As soon as two datapoints are more than ten seconds apart from each other the data is not consistent anymore. \cite{caiChallengesDataQuality2015}
 \subsubsection{Structure \& Documentation}
-If the structure of the data is not homogeneous, it is very difficult to analyze in an automated way. As a result the data either needs to be structured from the beginning or a process needs to be fabricated to structure the data automatically. Furthermore documentation is in order to structure and preprocess data. Documentation of data might include data format (CSV, parquet \cite{ApacheParquet2021}, JSON), date format (e.g. ISO 8601 with UTC offset), valid value spans (e.g. temperature is only valid if it is between 100 and 400 $^{\circ}$C)
+If the structure of the data is not homogeneous, it is very difficult to analyze in an automated way. As a result the data either needs to be structured from the beginning or a process needs to be fabricated to structure the data automatically. Furthermore documentation is in order to structure and preprocess data. Documentation of data might include data format (\ac{CSV}, parquet \cite{ApacheParquet2021}, \ac{JSON}), date format (e.g. ISO 8601 with UTC offset), valid value spans (e.g. temperature is only valid if it is between 100 and 400 $^{\circ}$C)
 \cite{caiChallengesDataQuality2015}
 
 \section{Improving data quality}
 This section will describe methods to improve data quality, based on the features elaborated in section \ref{data-quality-features}.
 \subsubsection{Completeness}
-The most common methods to increase data completeness are statistical and deep learning based approaches. The goal of these methods are to fill in the missing values of a dataset. An example for a statistical method is DynaMMo\cite{liDynaMMoMiningSummarization2009}. For ANNs (artificial neural networks) LSTM (Long short-term memory) or GRU (Gated recurrent unit) can be used to predict missing data. \cite{songIoTDataQuality2020}
+The most common methods to increase data completeness are statistical and deep learning based approaches. The goal of these methods are to fill in the missing values of a dataset. An example for a statistical method is DynaMMo\cite{liDynaMMoMiningSummarization2009}. For ANNs (artificial neural networks) \ac{LSTM} (Long short-term memory) or \ac{GRU} (Gated recurrent unit) can be used to predict missing data. \cite{songIoTDataQuality2020}
 \subsubsection{Accuracy}
 One approach to increase the accuracy of data is to define constraints for each value. E.g. When a machine cannot produce more than ten pieces per second, because it is physically not possible, the value could be limited to less or equal than ten. However limiting the values to a specific range might hide the fact that the machine  has an error and is producing faulty products at a rate of 15 pieces per second. This is one of the reasons why more sophisticated outlier detection methods are used.\cite{songIoTDataQuality2020}
 
 \subsubsection{Consistency}
-To facilitate consistent data, statistical smoothing or forecasting methods can be used. Examples methods are: ARIMA (Autoregressive integrated moving average) or GP ( Gaussian Process). ANNs can also be used to unify the time series interval between datapoints. \cite{songIoTDataQuality2020}
+To facilitate consistent data, statistical smoothing or forecasting methods can be used. Examples methods are: \ac{ARIMA} (Autoregressive integrated moving average) or \ac{GP} ( Gaussian Process). ANNs can also be used to unify the time series interval between datapoints. \cite{songIoTDataQuality2020}
 
 \subsubsection{Structure \& Documentation}
 The process of structuring heterogeneous and messy data is called data wrangling. In order to unify the structure of the data at least some documentation is required. Therefore the documentation of the data is fundamental in order to analyse or further process it. 
