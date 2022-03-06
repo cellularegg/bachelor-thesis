@@ -1,4 +1,4 @@
-\chapter{Introduction}
+\chapter{Introduction}\label{chapter:introduction}
 
 With the growing popularity of Internet of Things (\ac{IoT}) and digitizing business processes there is a growing amount of data available for analysis.
 In order to utilize the data from the IoT sensors it needs to be preprocessed. One step of preprocessing is data cleaning (also referred as data cleansing).
@@ -7,7 +7,7 @@ The main goal of data cleansing is to increase the data quality and furthermore 
 \section{Research method}
 This paper is a literature research. To get an overview of the topic, papers related to: data cleaning, anomaly detection for IoT data / time series data and outlier detection methods were researched. After some base knowledge was established the major topics of the paper were defined. Subsequently more research was done on the major topics (Features of data quality, data cleaning \& cleansing, outlier detection). To organize the references found while researching Zotero was used, with the Add-on Better BibTeX.
 
-\section{Features of data quality}\label{data-quality-features}
+\section{Features of data quality}\label{section:data-quality-features}
 This section will provide a few example key features of data quality. 
 \subsubsection{Completeness}
 Data completeness describes the wholeness of data. If there are certain aspects of data missing the data is not complete. For example if each datapoint of a sensor includes the date, time and production speed, the data is not complete, if one of those features is missing or not entire, this datapoint is not complete. \cite{caiChallengesDataQuality2015, songIoTDataQuality2020}
@@ -16,11 +16,11 @@ The accuracy of data describes the exactness. Example for possible data which de
 \subsubsection{Consistency}
 One example for consistency would be, if the data interval is equal. For example there should be a datapoint every ten seconds. As soon as two datapoints are more than ten seconds apart from each other the data is not consistent anymore. \cite{caiChallengesDataQuality2015}
 \subsubsection{Structure \& Documentation}
-If the structure of the data is not homogeneous, it is very difficult to analyze in an automated way. As a result the data either needs to be structured from the beginning or a process needs to be fabricated to structure the data automatically. Furthermore documentation is in order to structure and preprocess data. Documentation of data might include data format (\ac{CSV}, parquet \cite{ApacheParquet2021}, \ac{JSON}), date format (e.g. ISO 8601 with UTC offset), valid value spans (e.g. temperature is only valid if it is between 100 and 400 $^{\circ}$C)
+If the structure of the data is not homogeneous, it is very difficult to analyze in an automated way. As a result the data either needs to be structured from the beginning or a process needs to be fabricated to structure the data automatically. Furthermore documentation is required in order to structure and preprocess data. Documentation of data might include data format (\ac{CSV}, parquet \cite{ApacheParquet2021}, \ac{JSON}), date format (e.g. ISO 8601 with UTC offset), valid value spans (e.g. temperature is only valid if it is between 100 and 400 $^{\circ}$C)
 \cite{caiChallengesDataQuality2015}
 
-\section{Improving data quality}
-This section will describe methods to improve data quality, based on the features elaborated in section \ref{data-quality-features}.
+\section{Improving data quality}\label{section:imrpoving-data-quality}
+This section will describe methods to improve data quality, based on the features elaborated in \autoref{section:data-quality-features}.
 \subsubsection{Completeness}
 The most common methods to increase data completeness are statistical and deep learning based approaches. The goal of these methods are to fill in the missing values of a dataset. An example for a statistical method is DynaMMo\cite{liDynaMMoMiningSummarization2009}. For ANNs (artificial neural networks) \ac{LSTM} (Long short-term memory) or \ac{GRU} (Gated recurrent unit) can be used to predict missing data. \cite{songIoTDataQuality2020}
 \subsubsection{Accuracy}
