@@ -1,21 +1,26 @@
 \chapter{Outlier Detection}
 \section{Outlier Types}\label{section:outlier-detection}
 Outliers can be categorized as point outliers or subsequence outliers.
-\subsubsection{Point outliers}
+\subsubsection{Point Outliers}
 A point outlier is a single datapoint that strongly varies from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020}
+\begin{figure}[h]
+    \centering
+    \includegraphics{./plots/pdfs/point_outliers.pdf}
+    \caption{Examples of three point outliers}
+  \end{figure}
 
 \subsubsection{Subsequence outliers}
 Subsequence outliers are multiple consecutive datapoints that strongly vary from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020}\\\\
 Furthermore outliers can be divided into local and global outliers. 
-\subsubsection{Local outliers}
+\subsubsection{Local Outliers}
 A local outlier has a greater variance to its direct neighbouring datapoints (previous and next one) \cite{blazquez-garciaReviewOutlierAnomaly2020}
 
-\subsubsection{Global outliers}
+\subsubsection{Global Outliers}
 Whereas a global outlier varies more in regard to all datapoints.
 \cite{blazquez-garciaReviewOutlierAnomaly2020}
 \todo{Add charts that visualize point, subsequence, local and global outliers}
 
-\section{Outlier detection approaches}\label{section:outlier-detection-approaches}
+\section{Outlier Detection Approaches}\label{section:outlier-detection-approaches}
 Outlier detection methods can be divided into the following groups
 \subsubsection{Statistical}
 For statistical outlier detection, historical data is taken to develop a model that pictures the expected behavior of the data. An example of a statistical outlier detection is the threshold based method described in \autoref{section:threshold-based-outlier-detection} \cite{cookAnomalyDetectionIoT2020, giannoniAnomalyDetectionModels2018}
@@ -34,7 +39,7 @@ In this approach a prediction model needs to be developed, based on previous dat
 as the word ensemble suggests, this is a collection of outlier detection methods that use a specific vote mechanism to determine whether a datapoint is faulty or normal. For example using the majority vote system and a statistical, distance based and predictive method to detect outliers. If at least two methods flag a datapoint as an outlier the ensemble reports it as an outlier as well. If only one method reports it as an outlier the ensemble does not flag it as an anomaly.
 \cite{cookAnomalyDetectionIoT2020}
 
-\section{Threshold based outlier detection}\label{section:threshold-based-outlier-detection}
+\section{Threshold based Outlier Detection}\label{section:threshold-based-outlier-detection}
 Threshold based detection methods are able to identify outliers based on a given threshold $\tau$. These Methods can be described with the following formula
 $$
 |x_t - \hat{x}_t | > \tau \text{ \cite{blazquez-garciaReviewOutlierAnomaly2020}}
@@ -70,6 +75,6 @@ $MAD$ is a more robust (regarding outliers) way to calculate the deviation of a 
 \cite{leysDetectingOutliersNot2013, mehrangOutlierDetectionWeight2015}
 
 
-\section{Other Variants of outlier detection methods}
+\section{Other Variants of Outlier Detection Methods}
 Provide a deeper insight in other outlier detection approaches. E.g. Clustering / predictive or distance based.
 \todo{Research other outlier detection methods}
