@@ -1,26 +1,8 @@
-\chapter{Planned Structure}
-This chapter describes a rough estimate of the planned structure of my bachelor thesis.
-\section{Overview}
-This section will provide an overview and introduction to the topic anomaly detection and data cleaning/cleansing.
-\subsection{Introduction}
-Partly already written in the paper. See \autoref{chapter:introduction}.
-\subsection{Data cleaning \& Data cleansing}
-\autoref{chapter:data-cleaning-cleansing-approaches}
-(including data cleaning vs data cleansing)
-\section{Outlier detection}
-\subsection{General Overview}
-\autoref{chapter:outlier-detection}
-
-\subsection{Outlier detection methods}
-\autoref{section:outlier-detection-approaches}
-\subsection{Threshold based outlier detection}
-\autoref{section:threshold-based-outlier-detection}
-\subsection{Other variants of outlier detection methods}
-Provide a deeper insight in other outlier detection approaches. E.g. Clustering / predictive or distance based.
-\section{Outlier detection based on "real world data" (pegelalarm.at)}
+\chapter{Outlier Detection based on Water level Data}
 Create a connection between the theoretical descriptions of outlier detections to a real world use case. Data from \url{https://pegelalarm.at/}
 \section{What's the goal?}
 Describe the goal to archive: \newline
+\begin{itshape}
 ``
 \begin{enumerate}
     \item We are looking for an algorithm that detects outliers using only historical values. This would allow us to assign a probability to the last measured water level of a station, which would indicate how likely it is to be an outlier. We would then not store outliers in our system at all or classify them as outliers from the beginning.
@@ -30,20 +12,20 @@ Describe the goal to archive: \newline
 Point 2 is probably easier to implement than point 1, so an algorithm 1 would be more helpful for us. 
 Also important would be that the algorithm adjusts its (hyper)parameters accordingly based on the historical data. This means that a level at which there are often strong fluctuations, an outlier must already be quite outlier so that it is considered as an outlier.
 ''
-\subsection{How to retrieve the data (description of the API)}
+\end{itshape}
+
+\section{How to retrieve the data (description of the API)}
 Short overview on how to use the API to retrieve data? Python project to retrieve data: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc}
-\subsection{Overview of the data}
+\section{Overview of the data}
 Provide an overview oth the data.
-\subsection{Explorative data analysis}
+\section{Explorative data analysis}
 Similar to overview of the data
-\subsection{Manually detect outliers for a subset of data}
+\section{Manually detect outliers for a subset of data}
 Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data)
-\subsection{Define outlier detection performance metrics given on a subset of data}
+\section{Define outlier detection performance metrics given on a subset of data}
 Define a way to compare different outlier detection models / define performance metrics. E.g. number correct outliers, average confidence for the correct outliers, number of missed outliers,.... 
-\subsection{Implement different outlier detection approaches}
+\section{Implement different outlier detection approaches}
 Develop different outlier detection methods in Python and calculate performance metrics for each
-\subsection{Compare different outlier detection approaches}
+\section{Compare different outlier detection approaches}
 Compare detection methods from the previous section.
-\section{Conclusion}
-Summary and conclusion
-\subsection{Advantages and disadvantages of used outlier detection methods}
+

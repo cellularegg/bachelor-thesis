@@ -1,11 +1,4 @@
-\chapter{Introduction}\label{chapter:introduction}
-
-With the growing popularity of Internet of Things (\ac{IoT}) and digitizing business processes there is a growing amount of data available for analysis.
-In order to utilize the data from the IoT sensors it needs to be preprocessed. One step of preprocessing is data cleaning (also referred as data cleansing).
-The main goal of data cleansing is to increase the data quality and furthermore to detect and remove anomalies in the data. The quality requirements for the data can differ depending on the use case. Anomalies in sensor data are datapoints which do not picture the reality. For example an anomaly of a temperature sensor would be if the sensor reads 0 $^{\circ}$C and the real temperature is 23 $^{\circ}$C.
-
-\section{Research method}
-This paper is a literature research. To get an overview of the topic, papers related to: data cleaning, anomaly detection for IoT data / time series data and outlier detection methods were researched. After some base knowledge was established the major topics of the paper were defined. Subsequently more research was done on the major topics (Features of data quality, data cleaning \& cleansing, outlier detection). To organize the references found while researching Zotero was used, with the Add-on Better BibTeX.
+\chapter{Data Quality}
 
 \section{Features of data quality}\label{section:data-quality-features}
 This section will provide a few example key features of data quality. 
@@ -24,7 +17,7 @@ This section will describe methods to improve data quality, based on the feature
 \subsubsection{Completeness}
 The most common methods to increase data completeness are statistical and deep learning based approaches. The goal of these methods are to fill in the missing values of a dataset. An example for a statistical method is DynaMMo\cite{liDynaMMoMiningSummarization2009}. For ANNs (artificial neural networks) \ac{LSTM} (Long short-term memory) or \ac{GRU} (Gated recurrent unit) can be used to predict missing data. \cite{songIoTDataQuality2020}
 \subsubsection{Accuracy}
-One approach to increase the accuracy of data is to define constraints for each value. E.g. When a machine cannot produce more than ten pieces per second, because it is physically not possible, the value could be limited to less or equal than ten. However limiting the values to a specific range might hide the fact that the machine  has an error and is producing faulty products at a rate of 15 pieces per second. This is one of the reasons why more sophisticated outlier detection methods are used.\cite{songIoTDataQuality2020}
+One approach to increase the accuracy of data is to define constraints for each value. E.g. When a machine cannot produce more than ten pieces per second, because it is physically not possible, the value could be limited to less or equal than ten. However limiting the values to a specific range might hide the fact that the machine  has an error and is producing faulty products at a rate of 15 pieces per second. This is one of the reasons why more sophisticated outlier detection methods are used. \cite{songIoTDataQuality2020}
 
 \subsubsection{Consistency}
 To facilitate consistent data, statistical smoothing or forecasting methods can be used. Examples methods are: \ac{ARIMA} (Autoregressive integrated moving average) or \ac{GP} ( Gaussian Process). ANNs can also be used to unify the time series interval between datapoints. \cite{songIoTDataQuality2020}
