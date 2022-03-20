@@ -11,6 +11,8 @@ als Text (mit syntax highlighting)
 
 Methode beschreiben wie man Ausreißer algorithmisch erkennen kann da auf jeden fall die ganze Messperiode nehmen
 
+Python library for outlier detection
+https://github.com/yzhao062/pyod
 
 
 Wie kommen die Messfehler zu Stande? Nicht zwingend relevant aber nice to know
@@ -19,14 +21,5 @@ Wie kommen die Messfehler zu Stande? Nicht zwingend relevant aber nice to know
 Daten normalisieren?
 
 Welche Aggregation (Median, mean, min, max...) 
-
-
-Forschungsfrage ausformulieren:
-tatsächliche frage
-eine Frage die erklärt werden kann
-2-3 Forschungsfragen für Bachelorarbeit
-
-aus der Zielsetzung kann man gut Forschungsfragen formulieren
-
 
 Okular als PDF Viewer
