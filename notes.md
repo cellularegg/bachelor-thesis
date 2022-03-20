@@ -12,7 +12,8 @@ als Text (mit syntax highlighting)
 Methode beschreiben wie man Ausreißer algorithmisch erkennen kann da auf jeden fall die ganze Messperiode nehmen
 
 Python library for outlier detection
-https://github.com/yzhao062/pyod
+- https://github.com/yzhao062/pyod
+- https://github.com/yzhao062/anomaly-detection-resources#32-time-series-outlier-detection
 
 
 Wie kommen die Messfehler zu Stande? Nicht zwingend relevant aber nice to know
