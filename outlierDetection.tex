@@ -2,23 +2,47 @@
 \section{Outlier Types}\label{section:outlier-detection}
 Outliers can be categorized as point outliers or subsequence outliers.
 \subsubsection{Point Outliers}
-A point outlier is a single datapoint that strongly varies from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020}
+A point outlier is a single datapoint that strongly varies from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020} Examples of three point outliers are shown in \autoref{figure:point-outliers}.
 \begin{figure}[h]
-    \centering
-    \includegraphics{./plots/pdfs/point_outliers.pdf}
-    \caption{Examples of three point outliers}
-  \end{figure}
+  \centering
+  \includegraphics{./plots/pdfs/point_outliers.pdf}
+  \caption{Examples of three point outliers}
+  \label{figure:point-outliers}
+\end{figure}
 
 \subsubsection{Subsequence outliers}
-Subsequence outliers are multiple consecutive datapoints that strongly vary from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020}\\\\
+Subsequence outliers are multiple consecutive datapoints that strongly vary from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020} In \autoref{figure:subsequence-outliers} examples of subsequence outliers are shown.
+\newline\newline
+\begin{figure}[h]
+  \centering
+  \includegraphics{./plots/pdfs/subsequence_outliers.pdf}
+  \caption{Examples of three subsequence outliers}
+  \label{figure:subsequence-outliers}
+\end{figure}
 Furthermore outliers can be divided into local and global outliers. 
 \subsubsection{Local Outliers}
-A local outlier has a greater variance to its direct neighbouring datapoints (previous and next one) \cite{blazquez-garciaReviewOutlierAnomaly2020}
-
+A local outlier has a greater variance to its direct neighbouring datapoints (previous and next one) \cite{blazquez-garciaReviewOutlierAnomaly2020} In \autoref{figure:local-point-outliers} and \autoref{figure:local-subsequence-outliers} examples of local outliers are shown. The first two outliers in \autoref{figure:local-point-outliers} have a great variance towards it direct neighbours, however not to the values from Time 60 onwards.
+\begin{figure}[H]
+  \centering
+  \includegraphics{./plots/pdfs/local_point_outliers.pdf}
+  \caption{Examples of four local point outliers}
+  \label{figure:local-point-outliers}
+\end{figure}
+\begin{figure}[H]
+  \centering
+  \includegraphics{./plots/pdfs/local_subsequence_outliers.pdf}
+  \caption{Examples of six local subsequence outliers}
+  \label{figure:local-subsequence-outliers}
+\end{figure}
 \subsubsection{Global Outliers}
-Whereas a global outlier varies more in regard to all datapoints.
+Whereas a global outlier varies more in regard to all datapoints. \autoref{figure:point-outliers}, \ref{figure:subsequence-outliers} and \ref{figure:global-point-outliers} show picture examples of global outliers.
 \cite{blazquez-garciaReviewOutlierAnomaly2020}
-\todo{Add charts that visualize point, subsequence, local and global outliers}
+\begin{figure}[H]
+  \centering
+  \includegraphics{./plots/pdfs/global_point_outliers.pdf}
+  \caption{Examples of four global point outliers}
+  \label{figure:global-point-outliers}
+\end{figure}
 
 \section{Outlier Detection Approaches}\label{section:outlier-detection-approaches}
 Outlier detection methods can be divided into the following groups
@@ -42,7 +66,7 @@ as the word ensemble suggests, this is a collection of outlier detection methods
 \section{Threshold based Outlier Detection}\label{section:threshold-based-outlier-detection}
 Threshold based detection methods are able to identify outliers based on a given threshold $\tau$. These Methods can be described with the following formula
 $$
-|x_t - \hat{x}_t | > \tau \text{ \cite{blazquez-garciaReviewOutlierAnomaly2020}}
+  |x_t - \hat{x}_t | > \tau \text{ \cite{blazquez-garciaReviewOutlierAnomaly2020}}
 $$
 Where $x_t$ is the actual value and $\hat{x}_t$ is the expected value and $\tau$ is a given threshold.\\
 Methods to calculate $\hat{x}_t$ will be described in the following sections. Furthermore $\hat{x}_t$ can be calculated using the entire data series or with subsets (of equal length) of the entire data series. This means $\hat{x}_t$ can be either calculated for the whole data series or for just a segment.\\
@@ -50,17 +74,17 @@ Depending on the sensitivity wanted for outlier detection an appropriate $\tau$ 
 
 \subsubsection{Mean}
 $$
-\text{mean} = \overline{x} = \frac{1}{n} \sum^n_{t=0}x_t
+  \text{mean} = \overline{x} = \frac{1}{n} \sum^n_{t=0}x_t
 $$
 Where $n$ is the total number of samples. Using the mean as an expected value is not robust to outliers, because the median is not as robust as the mean in hindsight to outliers. To calculate the mean all datapoints of a series must be summed up and then divided by the number of datapoints.
 \subsubsection{Median}
 If $n$ is odd:
 $$
-median(x) = x_{(n+1)/2}
+  median(x) = x_{(n+1)/2}
 $$
 If $n$ is even:
 $$
-median(x) = \frac{x_{n/2} + x_{(n+1)/2}}{2}
+  median(x) = \frac{x_{n/2} + x_{(n+1)/2}}{2}
 $$
 Where $x$ is a dataset of $n$ elements ordered from smallest to largest\\
 ($x_1 \leq x_2 \leq x_3 \leq \ldots \leq x_{n-2} \leq x_{n-1} \leq x_n$)
@@ -69,7 +93,7 @@ To calculate the median all values must be sorted from smallest to largest. If t
 \subsubsection{Median Absolute Deviation (\ac{MAD})}
 The Median Absolute Deviation 
 $$
-MAD = median(|x_t - median(x)|)
+  MAD = median(|x_t - median(x)|)
 $$
 $MAD$ is a more robust (regarding outliers) way to calculate the deviation of a dataset. To calculate the $MAD$ firstly the median of the dataset must be calculated. Then the absolute difference between $x_t$ and the median of the dataset is calculated. The Median of all differences results in the $MAD$
 \cite{leysDetectingOutliersNot2013, mehrangOutlierDetectionWeight2015}
