@@ -24,3 +24,8 @@ Daten normalisieren?
 Welche Aggregation (Median, mean, min, max...) 
 
 Okular als PDF Viewer
+
+
+thousands separator in charts needed?
+
+Image of Map how to reference?
