@@ -15,7 +15,73 @@ Describe the goal to archive: \newline
 \end{itshape}
 
 \section{How to retrieve the Data (Description of the API)}
-Short overview on how to use the API to retrieve data? Python project to retrieve data: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc}
+% Short overview on how to use the API to retrieve data? Python project to retrieve data: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc}
+To make the access to the API easier SOBOS GmbH developed a Python wrapper which returns the requested data as a Pandas dataframe. The code for the Python wrapper is available on GitHub\cite{GitHub}: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc} \cite{strassmayrPegelalarmAPIWrapper2022}
+
+In order to request data, an API key needs to be requested using credentials. To request the API key a POST request needs to be sent to this endpoint \url{https://api.pegelalarm.at/api/login}, where the request body contains the users' credentials as shown in \autoref{listing:api-key-request-body}. 
+\begin{listing}
+\begin{minted}[linenos]{json}
+{
+    "username": "myUsername",
+    "password": "myPassword"
+}
+\end{minted}
+\caption{Request body to get API key}
+\label{listing:api-key-request-body}
+\end{listing}
+To generate the actual API key the key from the response needs to be hashed using the \ac{HMAC} Algorithm. This is done using Python's built in ``hmac'' module. \cite{HmacKeyedHashingMessage}. Afterwards the HMAC is byte64 encoded, so it can be sent in the ``X-AUTH-TOKEN'' header field.
+
+To get the unique identifier for a specific measurement station the list endpoint can be used. Which accepts three optional query parameters (qStationName - station name, qWater - water name and commonid - the unique identifier of a station) and returns a list of matching stations with metadata like coordinates, country or last water level. E.g. to retrieve the identifier of the Danube station located in Linz the URL is the following: \url{https://api.pegelalarm.at/api/station/1.1/list?qStationName=Linz&qWater=Donau}. Keep in mind in order to retrieve any data the header value ``X-AUTH-TOKEN'' must be set. An example response of this request is shown in \autoref{listing:response-list-endpoint}. Where the unique identifier is the ``commonid'' in line 9.
+\begin{listing}
+\begin{minted}[linenos]{json}
+{
+    "status": {
+        "code": 200
+    },
+    "payload": {
+        "stations": [
+            {
+                "name": "Donau / Linz / at",
+                "commonid": "207068-at",
+                "country": "Österreich",
+                "stationName": "Linz",
+                "water": "Donau",
+                "region": "Oberösterreich",
+                "latitude": 48.306915712282,
+                "longitude": 14.284689597541,
+                "positionKm": 2135.17,
+                "altitudeM": 247.74,
+                "defaultWarnValueCm": 550.0,
+                "defaultAlarmValueCm": 630.0,
+                "data": [
+                    {
+                        "type": "height in cm",
+                        "value": 358.0,
+                        "requestDate": "19.04.2022T14:59:51+0200",
+                        "sourceDate": "19.04.2022T14:45:00+0200"
+                    }
+                ],
+                "trend": 10,
+                "situation": 10,
+                "visibility": "PUBLIC",
+                "stationType": "surfacewater"
+            }
+        ]
+    }
+}
+\end{minted}
+\caption{Example response of the list endpoint}
+\label{listing:response-list-endpoint}
+\end{listing}
+
+To retrieve historical data, the history endpoint can be used. The request URL has the following structure: \url{https://api.pegelalarm.at/api/station/1.1/<unit>/<commonid>/history?<parameters>}. The unit can either be ``height'' or ``flow''. For this thesis only height data was used. The following parameters can be set:
+\begin{itemize}
+    \item \textbf{loadStartDate}: The start date to request data from. The timestamp format is: ``DD.MM.YYYYTHH:MM:SS\%2B0200'' e.g.: 
+    \item \textbf{loadEndDate}: The end date 
+    \item \textbf{granularity}: The granularity of the response. Possible values are: ``raw'' (for the last 3 months of data), ``hour'', ``day'', ``month'', ``year'', ``era''
+\end{itemize}
+When requesting aggregated data (anything other than ``raw''), the maximum value of the timespan is used.
+
 \section{Overview of the Data}
 Provide an overview oth the data.
 \section{Explorative Data Analysis}
@@ -57,8 +123,11 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 \captionof{listing}{Manual Outlier Detection Webapp using Dash\label{listing:manual-outlier-selection}}
 \todo{add comments to code}
 
-\section{Define Outlier Detection performance Metrics given on a Subset of Data}
+\section{Outlier Detection performance Metric}
+Why accuracy is bad in our case. Precision, Recall, F1 score
+
 Define a way to compare different outlier detection models / define performance metrics. E.g. number correct outliers, average confidence for the correct outliers, number of missed outliers,....
+
 \section{Implement different Outlier Detection Approaches}
 Develop different outlier detection methods in Python and calculate performance metrics for each
 \section{Compare different Outlier Detection Approaches}

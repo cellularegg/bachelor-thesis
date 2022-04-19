@@ -15,13 +15,17 @@ Python library for outlier detection
 - https://github.com/yzhao062/pyod
 - https://github.com/yzhao062/anomaly-detection-resources#32-time-series-outlier-detection
 
+Outlier detection using smoothing: https://towardsdatascience.com/real-time-time-series-anomaly-detection-981cf1e1ca13
+
+https://s-ai-f.github.io/Time-Series/outlier-detection-in-time-series.html
+
+Comparison of outlier detection methods: https://arxiv.org/abs/1510.03336
 
 Wie kommen die Messfehler zu Stande? Nicht zwingend relevant aber nice to know
 
+Normalize data?
 
-Daten normalisieren?
-
-Welche Aggregation (Median, mean, min, max...) 
+Which Aggregation method is used (Median, mean, min, max...) : MAX
 
 Okular als PDF Viewer
 
@@ -29,3 +33,5 @@ Okular als PDF Viewer
 thousands separator in charts needed?
 
 Image of Map how to reference?
+
+how much sourcecode? all or only noteworthy parts?
