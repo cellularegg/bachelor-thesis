@@ -76,11 +76,51 @@ To get the unique identifier for a specific measurement station the list endpoin
 
 To retrieve historical data, the history endpoint can be used. The request URL has the following structure: \url{https://api.pegelalarm.at/api/station/1.1/<unit>/<commonid>/history?<parameters>}. The unit can either be ``height'' or ``flow''. For this thesis only height data was used. The following parameters can be set:
 \begin{itemize}
-    \item \textbf{loadStartDate}: The start date to request data from. The timestamp format is: ``DD.MM.YYYYTHH:MM:SS\%2B0200'' e.g.: 
-    \item \textbf{loadEndDate}: The end date 
-    \item \textbf{granularity}: The granularity of the response. Possible values are: ``raw'' (for the last 3 months of data), ``hour'', ``day'', ``month'', ``year'', ``era''
+    \item \textbf{loadStartDate}: The start timestamp of the queried data.
+    \item \textbf{loadEndDate}: The end timestamp of the queried data.
+    \item \textbf{granularity}: The granularity of the response. 
 \end{itemize}
-When requesting aggregated data (anything other than ``raw''), the maximum value of the timespan is used.
+Possible values for the granularity are: ``raw'' (for the last 3 months of data), ``hour'', ``day'', ``month'', ``year'' or ``era'' (era returns one value for a given time)
+When requesting aggregated data (anything other than ``raw''), the maximum value of the timespan is used. The timestamps are in the following format: ``<DD>.<MM>.<YYYY>T<HH>:<MM>:<SS><+-UTCOFFSET>'', where the `+' is URL encoded to ``\%2B''. E.g.: ``31.03.2022T13:35:40\%2B0200''. If no parameters are provided the API returns the last few datapoints.
+
+An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/height/207068-at/history?loadStartDate=01.03.2022T13:35:40%2B0200&loadEndDate=01.03.2022T18:00:00%2B0200&granularity=hour} The result of this request is shown in \autoref{listing:water-level-data-response}.
+\todo{check formatting why is there a linebreak?}
+
+\begin{listing}
+\begin{minted}[linenos]{json}
+{
+    "status": {
+        "code": 200
+    },
+    "payload": {
+        "history": [
+            {
+                "value": 360.0,
+                "sourceDate": "01.03.2022T13:00:00+0100"
+            },
+            {
+                "value": 360.0,
+                "sourceDate": "01.03.2022T14:00:00+0100"
+            },
+            {
+                "value": 359.0,
+                "sourceDate": "01.03.2022T15:00:00+0100"
+            },
+            {
+                "value": 361.0,
+                "sourceDate": "01.03.2022T16:00:00+0100"
+            },
+            {
+                "value": 362.0,
+                "sourceDate": "01.03.2022T17:00:00+0100"
+            }
+        ]
+    }
+}
+\end{minted}
+\caption{Example response of historical water level data for one station}
+\label{listing:water-level-data-response}
+\end{listing}
 
 \section{Overview of the Data}
 Provide an overview oth the data.
