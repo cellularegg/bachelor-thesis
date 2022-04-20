@@ -163,10 +163,59 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 \captionof{listing}{Manual Outlier Detection Webapp using Dash\label{listing:manual-outlier-selection}}
 \todo{add comments to code}
 
-\section{Outlier Detection performance Metric}
-Why accuracy is bad in our case. Precision, Recall, F1 score
+\section{Outlier Detection performance Metrics}
+\subsection{Confusion Matrix}
+To compare the performance of two classification methods a confusion matrix, shown in \autoref{table:confusion-matrix}, can be used to provide an overview. A confusion matrix consists of the following elements (explained on the basis of outlier detection):
+\begin{itemize}
+    \item \ac{TP}: actual class: outlier, predicted class: outlier
+    \item \ac{FN}: actual class: outlier, predicted class: regular
+    \item \ac{TN}: actual class: regular, predicted class: regular
+    \item \ac{FP}: actual class: regular, predicted class: outlier
+\end{itemize}
+\begin{table}[ht]
+    \begin{tabular}{llll}
+     &  & \multicolumn{2}{l}{Predicted label} \\ \cline{3-4} 
+     & \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{\ac{P}} & \multicolumn{1}{l|}{\ac{N}} \\ \cline{2-4} 
+    \multicolumn{1}{l|}{} & \multicolumn{1}{l|}{Positive} & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}True positive} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}False negative} \\ \cline{2-4} 
+    \multicolumn{1}{l|}{\multirow{-2}{*}{True/ actual label}} & \multicolumn{1}{l|}{Negative} & \multicolumn{1}{l|}{\cellcolor[HTML]{FFCCC9}False positive} & \multicolumn{1}{l|}{\cellcolor[HTML]{9AFF99}True negative} \\ \cline{2-4} 
+\end{tabular}
+\caption{Example of binary confusion matrix}
+\label{table:confusion-matrix}
+\end{table}
+\todo{add reference? \url{https://en.wikipedia.org/w/index.php?title=Confusion_matrix&oldid=1058352752}}
+The green cells represent the correctly classified values (\ac{TP} \& \ac{TN}) and the red cells represent the incorrectly classified values (\ac{FN} \& \ac{FP}). The confusion matrix is the basis of many more performance metrics.
+\subsection{Accuracy}
+To make the comparison easier, the confusion matrix can be aggregated into one single value as a metric. There are numerous ways how this single metric can be calculated. One of the Most common and basic methods is the Accuracy:
+\begin{equation*}
+    Accuracy = \frac{Number\,of\,correct\,predictions}{Total\,number\,of\,predictions} = \frac{TP + TN}{TP + FN + TP + FP} = \frac{TP + TN}{P + N}
+\end{equation*}
+\todo{add caption to equations?}
+The accuracy provides information what percentage of values are correctly classified. However if the classes are not equally distributed, the accuracy is a bad metric. This is especially true for heavily imbalanced classes. For example if the dataset has $1\,000\,000$ positive values and $10$ negative, when optimizing for a high accuracy it can happen that the classifier predicts every value as positive and still achieves a very high accuracy:
+$$
+Accuracy = \frac{1\,000\,000 + 0}{1\,000\,000 + 10} = 0.99999
+$$
+Thus for measuring the performance of outliers, the accuracy is not a suitable metric.
 
-Define a way to compare different outlier detection models / define performance metrics. E.g. number correct outliers, average confidence for the correct outliers, number of missed outliers,....
+\subsection{Precision}
+\begin{equation*}
+    Precision = \frac{TP}{TP + FP}
+\end{equation*}
+
+\subsection{Recall}
+\begin{equation*}
+    Recall = \frac{TP}{TP + FN}
+\end{equation*}
+
+\subsection{F-score}
+\begin{equation*}
+    F-score = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall}
+\end{equation*}
+\cite{sasakiTruthFmeasure, chinchorMUC4EvaluationMetrics1992}
+
+This \cite{tahaMetricsEvaluating3D2015} references \cite{chinchorMUC4EvaluationMetrics1992}.\todo{chech whether this can also be included}
+% Why accuracy is bad in our case. Precision, Recall, F1 score
+
+% Define a way to compare different outlier detection models / define performance metrics. E.g. number correct outliers, average confidence for the correct outliers, number of missed outliers,....
 
 \section{Implement different Outlier Detection Approaches}
 Develop different outlier detection methods in Python and calculate performance metrics for each
