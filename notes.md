@@ -35,3 +35,5 @@ thousands separator in charts needed?
 Image of Map how to reference?
 
 how much sourcecode? all or only noteworthy parts?
+
+Do equations need labels?
