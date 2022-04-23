@@ -196,23 +196,42 @@ Accuracy = \frac{1\,000\,000 + 0}{1\,000\,000 + 10} = 0.99999
 $$
 Thus for measuring the performance of outliers, the accuracy is not a suitable metric.
 
-\subsection{Precision}
+\subsection{Precision and Recall}
+\autoref{figure:precision-vs-recall} shows a visual comparison between precision and recall. The precision provides information about what percentage of positive predictions were actually correct. Whereas the recall provides information about what percentage of all positive values were actually predicted as such. Precision and Recall are used to calculate the F-Score described in \autoref{subsection:f-score}.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth/2]{./pics/Precisionrecall.pdf}
+    \caption{Precision vs Recall\cite{PrecisionRecall2022}}
+    \label{figure:precision-vs-recall}
+\end{figure}
+\subsubsection{Precision}
 \begin{equation*}
     Precision = \frac{TP}{TP + FP}
 \end{equation*}
 
-\subsection{Recall}
+\subsubsection{Recall}
 \begin{equation*}
     Recall = \frac{TP}{TP + FN}
 \end{equation*}
 
 \subsection{F-score}
+\label{subsection:f-score}
+The $F_1-score$ is the harmonic mean of the precision and recall.
 \begin{equation*}
-    F-score = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall}
+    F_1-score = \frac{2}{\frac{1}{Precision} + \frac{1}{Recall}} = \frac{2}{\frac{Precision + Recall}{Precision \cdot Recall}} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall}
 \end{equation*}
 \cite{sasakiTruthFmeasure, chinchorMUC4EvaluationMetrics1992}
 
+The $F_\beta-score$ is more sophisticated compared to the $F_1-score$ where an additional parameter ($\beta$) needs to be chosen, which is used to weight the precision.
+\begin{equation*}
+    F_\beta-score = \frac{(\beta^2 + 1) \cdot Precision \cdot Recall}{\beta^2 \cdot Precsion + Recall}
+\end{equation*}
+\cite{tahaMetricsEvaluating3D2015}
 This \cite{tahaMetricsEvaluating3D2015} references \cite{chinchorMUC4EvaluationMetrics1992}.\todo{chech whether this can also be included}
+
+
+The $F_1-score$ uses $1$ for $\beta$ so the precision and the recall are equally weighted.
+
 % Why accuracy is bad in our case. Precision, Recall, F1 score
 
 % Define a way to compare different outlier detection models / define performance metrics. E.g. number correct outliers, average confidence for the correct outliers, number of missed outliers,....

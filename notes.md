@@ -21,7 +21,7 @@ https://s-ai-f.github.io/Time-Series/outlier-detection-in-time-series.html
 
 Comparison of outlier detection methods: https://arxiv.org/abs/1510.03336
 
-Wie kommen die Messfehler zu Stande? Nicht zwingend relevant aber nice to know
+Wie kommen die Messfehler zu Stande? Nicht zwingend relevant aber nice to know -> Possibility: Moving average results in consecutive errors.
 
 Normalize data?
 
@@ -37,3 +37,5 @@ Image of Map how to reference?
 how much sourcecode? all or only noteworthy parts?
 
 Do equations need labels?
+
+Reference to product name needed?
