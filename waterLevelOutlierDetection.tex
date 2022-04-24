@@ -1,7 +1,9 @@
 \chapter{Outlier Detection based on Water level Data}
 Create a connection between the theoretical descriptions of outlier detections to a real world use case. Data from \url{https://pegelalarm.at/}
+\todo{write}
 \section{What is the Goal?}
 Describe the goal to archive: \newline
+\todo{change this}
 \begin{itshape}
     ``
     \begin{enumerate}
@@ -84,7 +86,6 @@ Possible values for the granularity are: ``raw'' (for the last 3 months of data)
 When requesting aggregated data (anything other than ``raw''), the maximum value of the timespan is used. The timestamps are in the following format: ``<DD>.<MM>.<YYYY>T<HH>:<MM>:<SS><+-UTCOFFSET>'', where the `+' is URL encoded to ``\%2B''. E.g.: ``31.03.2022T13:35:40\%2B0200''. If no parameters are provided the API returns the last few datapoints.
 
 An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/height/207068-at/history?loadStartDate=01.03.2022T13:35:40%2B0200&loadEndDate=01.03.2022T18:00:00%2B0200&granularity=hour} The result of this request is shown in \autoref{listing:water-level-data-response}.
-\todo{check formatting why is there a linebreak?}
 
 \begin{listing}
 \begin{minted}[linenos]{json}
@@ -123,11 +124,16 @@ An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/heig
 \end{listing}
 
 \section{Overview of the Data}
+
 Provide an overview oth the data.
+\todo{write}
 \section{Explorative Data Analysis}
 Similar to overview of the data
+\todo{write}
 \section{Manually detect outliers for a subset of data}
-Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data)
+\todo{add examples of outliers in the data}
+\todo{Describe how the outliers are stored}
+Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data) \todo{Remove this}
 \newline
 \newline
 In order to speed up the manual labeling of outliers a program was written. The program is a Plotly \todo{add reference} Dash web application which displays the water level data as a scatter chart. 
