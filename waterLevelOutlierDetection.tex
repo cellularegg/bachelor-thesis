@@ -2,23 +2,28 @@
 FloodAlert (or ``Pegelalarm'' in German) is a service that provides water levels from about 30,000 measurement stations. It provides notifications to registered individuals, when a certain water level threshold is reached. Thus warning people about possible floods in their area. \cite{strassmayrFloodAlertWaterLevels}
 
 
-Unfortunately sometimes an incorrect water level is reported by the sensors, which are not maintained by the team of FloodAlert. FloodAlert just fetches the data from different maintainers of sensors. To reduce the frequency of false alarms, outliers should be identified and flagged. The theoretical parts of the previous sections can now be applied and tested on real-word data.
+Unfortunately sometimes an incorrect water level is reported by the sensors, which are not maintained by the team of FloodAlert. FloodAlert just fetches the data from different maintainers of sensors. To reduce the frequency of false alarms, outliers should be identified and flagged. The theoretical parts of the previous sections are applied and tested on real-word data.
 % Create a connection between the theoretical descriptions of outlier detections to a real world use case. Data from \url{https://pegelalarm.at/}
-\todo{write}
+% \todo{write}
 \section{What is the Goal?}
-Describe the goal to archive: \newline
-\todo{change this}
-\begin{itshape}
-    ``
-    \begin{enumerate}
-        \item We are looking for an algorithm that detects outliers using only historical values. This would allow us to assign a probability to the last measured water level of a station, which would indicate how likely it is to be an outlier. We would then not store outliers in our system at all or classify them as outliers from the beginning.
-        \item For us also an algorithm would be helpful, which assigns an outlier probability to each arbitrary measured value X of a time series. This algorithm would not only have access to the measured values before it, but also to those after it. This would allow us to detect outliers for all the time series data that we already have in the system and, for example, delete them.
+The ideal goal of FloodAlert would be to have a general model, that works on a variety of rivers. The model should be able to predict the probability of being an outlier for each water level value, without knowing future values. Thereby making it possible to classify incoming datapoints in real time, without needing future datapoints to make a prediction. Furthermore it would be ideal if the outlier detection method is able to adjust its parameters automatically for each river / water level measurement location. Because different rivers have different fluctuations in water level. Therefore each water level measurement station needs individual parameters. For example one river regularly has an increase and decrease of 10 centimeters whereas for another river 10 cm of water level variance from one datapoint to the next is definitely an outlier.
+\newline
+\newline
+Another approach would be to also take future values into consideration when predicting the probability of a value being an outlier. This method is probably easier and likely leads to better results. However a method which does not take future values into consideration would be more useful for FloodAlert, since the values could be classified immediately.
 
-    \end{enumerate}
-    Point 2 is probably easier to implement than point 1, so an algorithm 1 would be more helpful for us.
-    Also important would be that the algorithm adjusts its (hyper)parameters accordingly based on the historical data. This means that a level at which there are often strong fluctuations, an outlier must already be quite outlier so that it is considered as an outlier.
-    ''
-\end{itshape}
+% Describe the goal to archive: \newline
+% \todo{change this}
+% \begin{itshape}
+%     ``
+%     \begin{enumerate}
+%         \item We are looking for an algorithm that detects outliers using only historical values. This would allow us to assign a probability to the last measured water level of a station, which would indicate how likely it is to be an outlier. We would then not store outliers in our system at all or classify them as outliers from the beginning.
+%         \item For us also an algorithm would be helpful, which assigns an outlier probability to each arbitrary measured value X of a time series. This algorithm would not only have access to the measured values before it, but also to those after it. This would allow us to detect outliers for all the time series data that we already have in the system and, for example, delete them.
+
+%     \end{enumerate}
+%     Point 2 is probably easier to implement than point 1, so an algorithm 1 would be more helpful for us.
+%     Also important would be that the algorithm adjusts its (hyper)parameters accordingly based on the historical data. This means that a level at which there are often strong fluctuations, an outlier must already be quite outlier so that it is considered as an outlier.
+%     ''
+% \end{itshape}
 
 \section{How to retrieve the Data (Description of the API)}
 % Short overview on how to use the API to retrieve data? Python project to retrieve data: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc}
@@ -128,12 +133,15 @@ An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/heig
 \end{listing}
 
 \section{Overview of the Data}
-
-\todo{write}
+To test and tune the outlier detection methods the entire history of data was used. The granularity of the data usually is hourly up to the last three months of data. There are a few exceptions, where the granularity is not hourly, because either one or a few datapoints are missing. For the last three months the granularity is ``raw'', which is different for each station. 
+The following water level measurement stations were used to test the outlier detection methods.
+\begin{itemize}
+    \item List of station addresses \todo{add final stations}
+\end{itemize}
 
 \section{Explorative Data Analysis}
 Similar to overview of the data
-
+Code: \cite{zelenayOutlierDetectionWater2022}
 \todo{write}
 \section{Manually detect outliers for a subset of data}
 \todo{add examples of outliers in the data}
@@ -249,6 +257,8 @@ The $F_1-score$ uses $1$ for $\beta$ so the precision and the recall are equally
 
 \section{Implement different Outlier Detection Approaches}
 Develop different outlier detection methods in Python and calculate performance metrics for each
+\todo{write}
 \section{Compare different Outlier Detection Approaches}
 Compare detection methods from the previous section.
+\todo{write}
 
