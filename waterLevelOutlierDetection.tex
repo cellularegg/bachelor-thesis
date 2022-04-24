@@ -1,5 +1,9 @@
-\chapter{Outlier Detection based on Water level Data}
-Create a connection between the theoretical descriptions of outlier detections to a real world use case. Data from \url{https://pegelalarm.at/}
+\chapter{Outlier Detection based on Water Level Data}
+FloodAlert (or ``Pegelalarm'' in German) is a service that provides water levels from about 30,000 measurement stations. It provides notifications to registered individuals, when a certain water level threshold is reached. Thus warning people about possible floods in their area. \cite{strassmayrFloodAlertWaterLevels}
+
+
+Unfortunately sometimes an incorrect water level is reported by the sensors, which are not maintained by the team of FloodAlert. FloodAlert just fetches the data from different maintainers of sensors. To reduce the frequency of false alarms, outliers should be identified and flagged. The theoretical parts of the previous sections can now be applied and tested on real-word data.
+% Create a connection between the theoretical descriptions of outlier detections to a real world use case. Data from \url{https://pegelalarm.at/}
 \todo{write}
 \section{What is the Goal?}
 Describe the goal to archive: \newline
@@ -125,10 +129,11 @@ An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/heig
 
 \section{Overview of the Data}
 
-Provide an overview oth the data.
 \todo{write}
+
 \section{Explorative Data Analysis}
 Similar to overview of the data
+
 \todo{write}
 \section{Manually detect outliers for a subset of data}
 \todo{add examples of outliers in the data}

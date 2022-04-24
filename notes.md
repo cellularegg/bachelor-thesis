@@ -39,3 +39,7 @@ how much sourcecode? all or only noteworthy parts?
 Do equations need labels?
 
 Reference to product name needed?
+
+Where to include the full source code? appendix
+
+Can the repo of this thesis be public when submitting it? (Concern about plagiarism check)
