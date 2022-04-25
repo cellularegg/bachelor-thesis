@@ -74,7 +74,7 @@ Depending on the sensitivity wanted for outlier detection an appropriate $\tau$ 
 
 \subsubsection{Mean}
 $$
-  \text{mean} = \overline{x} = \frac{1}{n} \sum^n_{t=0}x_t
+  \text{mean} = \bar{x} = \frac{1}{n} \sum^n_{t=0}x_t
 $$
 Where $n$ is the total number of samples. Using the mean as an expected value is not robust to outliers, because the median is not as robust as the mean in hindsight to outliers. To calculate the mean all datapoints of a series must be summed up and then divided by the number of datapoints.
 \subsubsection{Median}
@@ -99,7 +99,23 @@ $MAD$ is a more robust (regarding outliers) way to calculate the deviation of a 
 \cite{leysDetectingOutliersNot2013, mehrangOutlierDetectionWeight2015}
 
 \section{Outlier Detection using z-score}
-\todo{write}
+The z-score, also known as the standard score, is the factor of how many standard deviations a datapoint differs from the mean. Using standard score to detect outliers works best, when the data is distributed normally. Because then it can be assumed, that e.g. the top and bottom 0.5\% are outliers and therefore every value with $|z| > \approx 2.576$ can be classified as an outlier. %2.5758293035489
+\begin{equation*}
+  z_t = \frac{x_t - \mu}{\sigma}
+\end{equation*}
+
+Where $\mu$ is the mean of the dataset and $\sigma$ is the standard deviation. When the mean and the standard deviation of the entire dataset is now known the mean and the standard deviation of a known sample can be used.
+\cite{DetectionSpatialOutlier, teschlSpezielleStetigeVerteilungen2014, rousseeuwAnomalyDetectionRobust2018}
+
+\begin{equation*}
+  \sigma = s = \sqrt{\frac{1}{n-1}\sum^n_{i=1}{(x_i - \bar{x})^2}}
+\end{equation*}
+\cite{teschlSpezielleStetigeVerteilungen2014, rousseeuwAnomalyDetectionRobust2018}
+\par
+To check whether the value $x_t$ is an outlier the absolute of its z-score is compared against a threshold and if the absolute value of the z-score exceeds the threshold $x_t$ is classified as an outlier.
+\begin{equation*}
+  |z| > \tau
+\end{equation*}
 \section{Outlier Detection using modified z-score}
 \cite{baeOutlierDetectionSmoothing2019}
 \todo{write}

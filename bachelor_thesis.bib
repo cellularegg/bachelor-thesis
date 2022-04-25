@@ -137,6 +137,15 @@
   abstract = {Code for the bachelor thesis}
 }
 
+@misc{DetectionSpatialOutlier,
+  title = {Detection of {{Spatial Outlier}} by {{Using Improved Z-Score Test}}},
+  url = {https://ieeexplore-1ieee-1org-100033cm6022a.han.technikum-wien.at/document/8862582/},
+  urldate = {2022-04-25},
+  abstract = {Outlier detection is a prominent technique in data mining since it has various vital applications. Outlier detection can be used to remove noise or study the specific observations in data that are dissimilar to those in its neighborhood. The detection of outliers are being used to show out hidden and valuable information in many areas of applications. [1]. The z-score test has long been used to detect outliers in data. In this work, a modified version of the z-score test is proposed which can lead to a reduction of the time-complexity of the traditional z-score test by a value of n each iteration, where n donates the number of spatial points in the data set which have not been discovered as outliers. Using the outlier threshold value to calculate the value of the modified z-score function rather than calculating the z-score value for each observation in the dataset makes this possible.},
+  langid = {american},
+  file = {/home/zeleodav/Zotero/storage/PVFW6R9Y/8862582.html}
+}
+
 @article{giannoniAnomalyDetectionModels2018,
   title = {Anomaly {{Detection Models}} for {{IoT Time Series Data}}},
   author = {Giannoni, Federico and Mancini, Marco and Marinelli, Federico},
@@ -254,6 +263,24 @@
   keywords = {big data,data cleansing,data quality}
 }
 
+@article{rousseeuwAnomalyDetectionRobust2018,
+  title = {Anomaly Detection by Robust Statistics},
+  author = {Rousseeuw, Peter J. and Hubert, Mia},
+  year = {2018},
+  journal = {WIREs Data Mining and Knowledge Discovery},
+  volume = {8},
+  number = {2},
+  pages = {e1236},
+  issn = {1942-4795},
+  doi = {10.1002/widm.1236},
+  url = {https://onlinelibrary.wiley.com/doi/abs/10.1002/widm.1236},
+  urldate = {2022-04-25},
+  abstract = {Real data often contain anomalous cases, also known as outliers. These may spoil the resulting analysis but they may also contain valuable information. In either case, the ability to detect such anomalies is essential. A useful tool for this purpose is robust statistics, which aims to detect the outliers by first fitting the majority of the data and then flagging data points that deviate from it. We present an overview of several robust methods and the resulting graphical outlier detection tools. We discuss robust procedures for univariate, low-dimensional, and high-dimensional data, such as estimating location and scatter, linear regression, principal component analysis, classification, clustering, and functional data analysis. Also the challenging new topic of cellwise outliers is introduced. WIREs Data Mining Knowl Discov 2018, 8:e1236. doi: 10.1002/widm.1236 This article is categorized under: Algorithmic Development {$>$} Spatial and Temporal Data Mining Technologies {$>$} Classification Technologies {$>$} Structure Discovery and Clustering Technologies {$>$} Visualization},
+  langid = {english},
+  annotation = {\_eprint: https://onlinelibrary.wiley.com/doi/pdf/10.1002/widm.1236},
+  file = {/home/zeleodav/Zotero/storage/3KGB6PF9/Rousseeuw and Hubert - 2018 - Anomaly detection by robust statistics.pdf;/home/zeleodav/Zotero/storage/D9FQXLL9/widm.html}
+}
+
 @article{sasakiTruthFmeasure,
   title = {The Truth of the {{F-measure}}},
   author = {Sasaki, Yutaka},
@@ -275,6 +302,20 @@
   abstract = {Data quality issues have been widely recognized in IoT data, and prevent the downstream applications. In this tutorial, we review the state-of-the-art techniques for IoT data quality management. In particular, we discuss how the dedicated approaches improve various data quality dimensions, including validity, completeness and consistency. Among others, we further highlight the recent advances by deep learning techniques for IoT data quality. Finally, we indicate the open problems in IoT data quality management, such as benchmark or interpretation of data quality issues.},
   isbn = {978-1-4503-6859-9},
   keywords = {data curation,internet of things}
+}
+
+@article{StandardScore2022,
+  title = {Standard Score},
+  year = {2022},
+  month = apr,
+  journal = {Wikipedia},
+  url = {https://en.wikipedia.org/w/index.php?title=Standard_score&oldid=1082326996},
+  urldate = {2022-04-25},
+  abstract = {In statistics, the standard score is the number of standard deviations by which the value of a raw score (i.e., an observed value or data point) is above or below the mean value of what is being observed or measured. Raw scores above the mean have positive standard scores, while those below the mean have negative standard scores.  It is calculated by subtracting the population mean from an individual raw score and then dividing the difference by the population standard deviation. This process of converting a raw score into a standard score is called standardizing or normalizing (however, "normalizing" can refer to many types of ratios; see normalization for more).  Standard scores are most commonly called z-scores; the two terms may be used interchangeably, as they are in this article. Other equivalent terms in use include z-values, normal scores, standardized variables and pull in high energy physics.Computing a z-score requires knowledge of the mean and standard deviation of the complete population to which a data point belongs; if one only has a sample of observations from the population, then the analogous computation using the sample mean and sample standard deviation yields the t-statistic.},
+  copyright = {Creative Commons Attribution-ShareAlike License},
+  langid = {english},
+  annotation = {Page Version ID: 1082326996},
+  file = {/home/zeleodav/Zotero/storage/T3TSGGMM/Standard_score.html}
 }
 
 @misc{strassmayrFloodAlertWaterLevels,
@@ -330,6 +371,214 @@
   abstract = {Sensor data quality plays a vital role in Internet of Things (IoT) applications as they are rendered useless if the data quality is bad. This systematic review aims to provide an introduction and guide for researchers who are interested in quality-related issues of physical sensor data. The process and results of the systematic review are presented which aims to answer the following research questions: what are the different types of physical sensor data errors, how to quantify or detect those errors, how to correct them and what domains are the solutions in. Out of 6970 literatures obtained from three databases (ACM Digital Library, IEEE Xplore and ScienceDirect) using the search string refined via topic modelling, 57 publications were selected and examined. Results show that the different types of sensor data errors addressed by those papers are mostly missing data and faults e.g. outliers, bias and drift. The most common solutions for error detection are based on principal component analysis (PCA) and artificial neural network (ANN) which accounts for about 40\% of all error detection papers found in the study. Similarly, for fault correction, PCA and ANN are among the most common, along with Bayesian Networks. Missing values on the other hand, are mostly imputed using Association Rule Mining. Other techniques include hybrid solutions that combine several data science methods to detect and correct the errors. Through this systematic review, it is found that the methods proposed to solve physical sensor data errors cannot be directly compared due to the non-uniform evaluation process and the high use of non-publicly available datasets. Bayesian data analysis done on the 57 selected publications also suggests that publications using publicly available datasets for method evaluation have higher citation rates.},
   keywords = {Datasets,Sensor data error correction,Sensor data error detection,Sensor data quality,Systematic review},
   file = {/home/zeleodav/Zotero/storage/GVDQVK6L/Teh et al. - 2020 - Sensor data quality A systematic review.pdf}
+}
+
+@inbook{teschlBeschreibendeStatistikUnd2014,
+  title = {Beschreibende {{Statistik}} Und {{Zusammenhangsanalysen}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {209--240},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_8},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_8},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlDifferentialgleichungen2014,
+  title = {Differentialgleichungen},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {179--207},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_7},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_7},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlDifferentialrechnung2014,
+  title = {Differentialrechnung {{I}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {55--82},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_2},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_2},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlDifferentialrechnungII2014,
+  title = {Differentialrechnung {{II}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {83--116},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_3},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_3},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlDifferentialrechnungMehrerenVariablen2014,
+  title = {Differentialrechnung in Mehreren {{Variablen}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {157--177},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_6},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_6},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlElementareFunktionen2014,
+  title = {Elementare {{Funktionen}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {1--54},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_1},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_1},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlElementareWahrscheinlichkeitsrechnung2014,
+  title = {Elementare {{Wahrscheinlichkeitsrechnung}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {241--264},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_9},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_9},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlFourierreihen2014,
+  title = {Fourierreihen},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {143--155},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_5},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_5},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlIntegralrechnung2014,
+  title = {Integralrechnung},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {117--141},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_4},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_4},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@book{teschlMathematikFurInformatiker2014,
+  title = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  series = {{{eXamen}}.Press},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9},
+  urldate = {2022-04-25},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlSchliessendeStatistik2014,
+  title = {Schlie\ss ende {{Statistik}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {347--382},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_13},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_13},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlSpezielleDiskreteVerteilungen2014,
+  title = {Spezielle Diskrete {{Verteilungen}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {303--324},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_11},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_11},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlSpezielleStetigeVerteilungen2014,
+  title = {Spezielle Stetige {{Verteilungen}}},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {325--345},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_12},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_12},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
+}
+
+@inbook{teschlZufallsvariablen2014,
+  title = {Zufallsvariablen},
+  booktitle = {Mathematik F\"ur {{Informatiker}}},
+  author = {Teschl, Gerald and Teschl, Susanne},
+  year = {2014},
+  pages = {265--301},
+  publisher = {{Springer Berlin Heidelberg}},
+  address = {{Berlin, Heidelberg}},
+  doi = {10.1007/978-3-642-54274-9_10},
+  url = {http://link.springer.com/10.1007/978-3-642-54274-9_10},
+  urldate = {2022-04-25},
+  collaborator = {Teschl, Gerald and Teschl, Susanne},
+  isbn = {978-3-642-54273-2 978-3-642-54274-9}
 }
 
 @article{weissMetricVisualizationCompleteness2021,
