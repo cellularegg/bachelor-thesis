@@ -99,26 +99,47 @@ $MAD$ is a more robust (regarding outliers) way to calculate the deviation of a 
 \cite{leysDetectingOutliersNot2013, mehrangOutlierDetectionWeight2015}
 
 \section{Outlier Detection using z-score}
+\label{section:outlier-detection-z-score}
 The z-score, also known as the standard score, is the factor of how many standard deviations a datapoint differs from the mean. Using standard score to detect outliers works best, when the data is distributed normally. Because then it can be assumed, that e.g. the top and bottom 0.5\% are outliers and therefore every value with $|z| > \approx 2.576$ can be classified as an outlier. %2.5758293035489
+A visual representation of the z-score in a normal distribution is shown in \autoref{figure:normal-distribution}
 \begin{equation*}
   z_t = \frac{x_t - \mu}{\sigma}
 \end{equation*}
 
 Where $\mu$ is the mean of the dataset and $\sigma$ is the standard deviation. When the mean and the standard deviation of the entire dataset is now known the mean and the standard deviation of a known sample can be used.
 \cite{DetectionSpatialOutlier, teschlSpezielleStetigeVerteilungen2014, rousseeuwAnomalyDetectionRobust2018}
-
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=\textwidth]{./pics/The_Normal_Distribution.pdf}
+  \caption{Standard Score in a normal distribution\cite{StandardScore2022}}
+  \label{figure:normal-distribution}
+\end{figure}
 \begin{equation*}
   \sigma = s = \sqrt{\frac{1}{n-1}\sum^n_{i=1}{(x_i - \bar{x})^2}}
 \end{equation*}
 \cite{teschlSpezielleStetigeVerteilungen2014, rousseeuwAnomalyDetectionRobust2018}
 \par
-To check whether the value $x_t$ is an outlier the absolute of its z-score is compared against a threshold and if the absolute value of the z-score exceeds the threshold $x_t$ is classified as an outlier.
+To check whether the value $x_t$ is an outlier the absolute of its z-score is compared against a threshold ($\tau$) and if the absolute value of the z-score exceeds the threshold $x_t$ is classified as an outlier.
 \begin{equation*}
-  |z| > \tau
+  |z_t| > \tau
 \end{equation*}
 \section{Outlier Detection using modified z-score}
+Because the mean and standard deviation are not robust towards outliers the z-score can be modified to use more robust metrics for the expected value and the variation of the values. To make the outlier detection with the z-score more robust the mean can be replaced with the median and the standard deviation with the \ac{MAD} or the \ac{MADN}. A possible formula for a modified z-score, as described in \cite{baeOutlierDetectionSmoothing2019}, could be:
+\begin{equation*}
+  m_t = \frac{|x_t - median(X)|}{MADN(X)}
+\end{equation*}
+Where the formula for the \ac{MADN} is:
+\begin{equation*}
+  MADN(X) = \frac{MAD(X)}{0.6745}
+\end{equation*}
+The constant value 0.6745 is the 75\textsuperscript{th} percentile of a standard normal distribution, which is equal to the \ac{MAD} of a standard normal distribution with $\sigma = 1$.
 \cite{baeOutlierDetectionSmoothing2019}
-\todo{write}
+% http://www.iceaaonline.com/ready/wp-content/uploads/2016/10/RA02-paper-Jones-Outing-Outliers.pdf
+\par
+The classification of outliers using the modified z-score ($m_t$) is the same for the regular standard score described in \autoref{section:outlier-detection-z-score}:
+\begin{equation*}
+  |m_t| > \tau
+\end{equation*}
 
 
 % \section{Other Variants of Outlier Detection Methods}
