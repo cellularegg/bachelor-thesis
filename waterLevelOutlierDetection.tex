@@ -139,10 +139,7 @@ The following water level measurement stations were used to test the outlier det
     \item List of station addresses \todo{add final stations}
 \end{itemize}
 
-\section{Explorative Data Analysis}
-Similar to overview of the data
-Code: \cite{zelenayOutlierDetectionWater2022}
-\todo{write}
+
 \section{Manually detect outliers for a subset of data}
 \todo{add examples of outliers in the data}
 \todo{Describe how the outliers are stored}
@@ -181,6 +178,71 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 \inputminted[linenos]{python}{./code/manual_outlier_detection.py}
 \captionof{listing}{Manual Outlier Detection Webapp using Dash\label{listing:manual-outlier-selection}}
 \todo{add comments to code}
+
+\section{Explorative Data Analysis}
+\subsection{Aghacashlaun Station}
+% Similar to overview of the data
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics{./plots/pdfs/36022-ie/boxplot_36022-ie_all.pdf}
+%     \caption{Boxplot of Aghacashlaun - Aghacashlaun containing all values}
+%     \label{figure:boxplot-36022-ie-all}
+% \end{figure}
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics{./plots/pdfs/36022-ie/boxplot_36022-ie_regular.pdf}
+%     \caption{Boxplot of Aghacashlaun - Aghacashlaun containing regular values}
+%     \label{figure:boxplot-36022-ie-regular}
+% \end{figure}
+
+% \begin{figure}[H]
+%     \centering
+%     \includegraphics{./plots/pdfs/36022-ie/boxplot_36022-ie_outlier.pdf}
+%     \caption{Boxplot of Aghacashlaun - Aghacashlaun containing outlier values}
+%     \label{figure:boxplot-36022-ie-outlier}
+% \end{figure}
+\todo{change formatting of tables}
+\input{tables/36022-ie/36022-ie-7-number-summary-all}
+\input{tables/36022-ie/36022-ie-7-number-summary-regular.tex}
+\input{tables/36022-ie/36022-ie-7-number-summary-outlier.tex}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics{./plots/pdfs/36022-ie/outlier_class_distribution_36022-ie.pdf}
+    \caption{Class distribution of Aghacashlaun - Aghacashlaun}
+    \label{figure:class-distribution-36022-ie}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics{./plots/pdfs/36022-ie/boxplot_36022-ie.pdf}
+    \caption{Boxplot of Aghacashlaun - Aghacashlaun}
+    \label{figure:boxplot-36022-ie}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{./plots/pdfs/36022-ie/water_level_histogram_36022-ie.pdf}
+    \caption{Histogram of the water level of Aghacashlaun - Aghacashlaun}
+    \label{figure:water-level-histogram-36022-ie}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics{./plots/pdfs/36022-ie/water_level_delta_histogram_36022-ie.pdf}
+    \caption{Histogram of the water level delta of Aghacashlaun - Aghacashlaun}
+    \label{figure:water-level-delta-histogram-36022-ie}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics{./plots/pdfs/36022-ie/time_delta_histogram_36022-ie.pdf}
+    \caption{Histogram of the time delta (in hours) of Aghacashlaun - Aghacashlaun}
+    \label{figure:time-delta-histogram-36022-ie}
+\end{figure}
+\par
+Code: \cite{zelenayOutlierDetectionWater2022}
+\todo{add descriptions to tables and figures}
 
 \section{Outlier Detection performance Metrics}
 \subsection{Confusion Matrix}
@@ -223,6 +285,7 @@ Thus for measuring the performance of outliers, the accuracy is not a suitable m
     \caption{Precision vs Recall\cite{PrecisionRecall2022}}
     \label{figure:precision-vs-recall}
 \end{figure}
+\todo{Correct reference of a image used 1:1?}
 \subsubsection{Precision}
 \begin{equation*}
     Precision = \frac{TP}{TP + FP}
