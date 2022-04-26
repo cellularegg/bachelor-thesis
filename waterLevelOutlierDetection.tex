@@ -133,7 +133,8 @@ An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/heig
 \end{listing}
 
 \section{Overview of the Data}
-To test and tune the outlier detection methods the entire history of data was used. The granularity of the data usually is hourly up to the last three months of data. There are a few exceptions, where the granularity is not hourly, because either one or a few datapoints are missing. For the last three months the granularity is ``raw'', which is different for each station. 
+To test and tune the outlier detection methods the entire history of data was used. The granularity of the data usually is hourly up to the last three months of data. There are a few exceptions, where the granularity is not hourly, because either one or a few datapoints are missing. For the last three months the granularity is ``raw'', which is different for each station. Additionally the base (where the sensor reports water level equals zero) also differs per station. Some station have an arbitrary zero level whereas some stations have the sea level as a base. Thus the water level does not actually reflect the actual height, or depth, of the water. Instead it represents the relative water level to a specific height.
+\par
 The following water level measurement stations were used to test the outlier detection methods.
 \begin{itemize}
     \item List of station addresses \todo{add final stations}
@@ -142,10 +143,8 @@ The following water level measurement stations were used to test the outlier det
 
 \section{Manually detect outliers for a subset of data}
 \todo{add examples of outliers in the data}
-\todo{Describe how the outliers are stored}
-Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data) \todo{Remove this}
-\newline
-\newline
+% \todo{Describe how the outliers are stored?}
+% Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data) \todo{Remove this}
 In order to speed up the manual labeling of outliers a program was written. The program is a Plotly \todo{add reference} Dash web application which displays the water level data as a scatter chart. 
 By clicking the datapoints in the chart the user is able to toggle the datapoint as an outlier or back to a regular value. 
 In Listing \ref{listing:manual-outlier-selection} the source code of the Dash application is shown. 
@@ -318,10 +317,226 @@ The $F_1-score$ uses $1$ for $\beta$ so the precision and the recall are equally
 
 % Define a way to compare different outlier detection models / define performance metrics. E.g. number correct outliers, average confidence for the correct outliers, number of missed outliers,....
 
-\section{Implement different Outlier Detection Approaches}
-Develop different outlier detection methods in Python and calculate performance metrics for each
+\section{Implementation of different Outlier Detection Approaches}
+
+The input data structure for the different approaches is a pandas DataFrame. \todo{add reference?}The structure of the DataFrame is equal for all measurement stations. It contains the following columns:
+\begin{itemize}
+    \item \verb|water_level|: the water level of the river in cm (datatype: float64)
+    \item \verb|timestamp|: the date and time of the datapoint in UTC (datatype: datetime64[ns, UTC])
+    \item \verb|is_outlier|: true or false depending if the value is an outlier (datatype: bool)
+\end{itemize}
+To test the performance of the models the column \verb|is_outlier| contains the ground truth, which was manually labeled. An example of the input data can be seen in \autoref{table:36022-ie-9head}.
+
+\input{tables/36022-ie/36022-ie-9head.tex}
+To speed up the process of calculating the result of the outlier detection method ($|x_t - \hat{x}_t|$, the z-score or the modified z-score) is all done in one step and in the second step the result of this calculation is compared against a range of thresholds.
+\subsection{Mean Threshold}
+Calculating $\hat{x}_t$ using the mean for a pandas DataFrame is quite straightforward and is shown in \autoref{listing:mean-outlier-calculation}.
+\begin{listing}
+\begin{minted}[linenos]{python}
+from typing import Union
+
+import numpy as np
+import pandas as pd
+
+
+def mean_outlier_detection(input_df: pd.DataFrame,
+                           window: Union[int, None],
+                           center_window: bool):
+    """
+    Detects outliers in a dataframe using a (moving) average.
+    :param input_df: the input dataframe where the values are stored
+                     in the column water_level
+    :param window: the size of the window, None if no window should
+                   be used
+    :param center_window: whether the window should be centered or not
+    :return: a copy of the input dataframe where the column result
+             should be compared to a threshold to detect outliers
+    """
+    od_df = input_df.copy()
+    if window is None:
+        od_df['x_hat'] = od_df['water_level'].mean()
+    else:
+        od_df['x_hat'] = \
+            od_df['water_level'].rolling(window=window,
+                                         center=center_window,
+                                         min_periods=1).mean()
+    od_df['result'] = np.abs(od_df['water_level'] - od_df['x_hat'])
+    return od_df
+\end{minted}
+\caption{First step of classifying outliers using the mean}
+\label{listing:mean-outlier-calculation}
+\end{listing}
+
+\subsection{Median Threshold}
+The calculation of the median is quite similar to the mean. It is shown in \autoref{listing:median-outlier-calculation}.
+\begin{listing}
+\begin{minted}[linenos]{python}
+def median_outlier_detection(input_df: pd.DataFrame,
+                             window: Union[int, None],
+                             center_window: bool):
+    """
+    Detects outliers in a dataframe using a (moving) average.
+    :param input_df: the input dataframe where the values are stored
+                     in the column water_level
+    :param window: the size of the window, None if no window should
+                   be used
+    :param center_window: whether the window should be centered or not
+    :return: a copy of the input dataframe where the column result
+             should be compared to a threshold to detect outliers
+    """
+    od_df = input_df.copy()
+    if window is None:
+        od_df['x_hat'] = od_df['water_level'].median()
+    else:
+        od_df['x_hat'] = \
+            od_df['water_level'].rolling(window=window,
+                                         center=center_window,
+                                         min_periods=1).median()
+    od_df['result'] = np.abs(od_df['water_level'] - od_df['x_hat'])
+    return od_df
+\end{minted}
+\caption{First step of classifying outliers using the median}
+\label{listing:median-outlier-calculation}
+\end{listing}
+
+% \subsection{\ac{MAD} Threshold}
+\subsection{MAD Threshold}
+In \autoref{listing:mad-outlier-calculation} an example for an implementation for calculating the \ac{MAD} is provided.
+\begin{listing}
+\begin{minted}[linenos]{python}
+def mad_outlier_detection(input_df: pd.DataFrame,
+                          window: Union[int, None],
+                          center_window: bool):
+    """
+    Detects outliers in a dataframe using a (moving) average.
+    :param input_df: the input dataframe where the values are stored
+                     in the column water_level
+    :param window: the size of the window, None if no window should
+                   be used
+    :param center_window: whether the window should be centered or not
+    :return: a copy of the input dataframe where the column result
+             should be compared to a threshold to detect outliers
+    """
+    od_df = input_df.copy()
+    if window is None:
+        od_df['x_hat'] = np.median(
+            np.abs(od_df['water_level'] - np.median(
+                od_df['water_level'])))
+    else:
+        od_df['x_hat'] = \
+            od_df['water_level'].rolling(window=window,
+                                         center=center_window,
+                                         min_periods=1).apply(
+                lambda x: np.median(np.abs(x - np.median(x))))
+    od_df['result'] = np.abs(od_df['water_level'] - od_df['x_hat'])
+    return od_df
+\end{minted}
+\caption{First step of classifying outliers using the \ac{MAD}}
+\label{listing:mad-outlier-calculation}
+\end{listing}
+
+\subsection{Z-Score}
+\autoref{listing:z-score-outlier-calculation} shows how to calculate th z-score in Python.
+\begin{listing}
+\begin{minted}[linenos]{python}
+def z_score_outlier_detection(input_df: pd.DataFrame,
+                              window: Union[int, None],
+                              center_window: bool):
+    """
+    Detects outliers in a dataframe using a (moving) average.
+    :param input_df: the input dataframe where the values are stored
+                     in the column water_level
+    :param window: the size of the window, None if no window should
+                   be used
+    :param center_window: whether the window should be centered or not
+    :return: a copy of the input dataframe where the column result
+             should be compared to a threshold to detect outliers
+    """
+    od_df = input_df.copy()
+    if window is None:
+        od_df['mean'] = od_df['water_level'].mean()
+        od_df['std'] = od_df['water_level'].std()
+    else:
+        od_df['mean'] = \
+            od_df['water_level'].rolling(window=window,
+                                         center=center_window,
+                                         min_periods=1).mean()
+        od_df['std'] = \
+            od_df['water_level'].rolling(window=window,
+                                         center=center_window,
+                                         min_periods=1).std()
+    od_df['result'] = \
+        (od_df['water_level'] - od_df['mean']).divide(od_df['std'])
+    return od_df
+\end{minted}
+\caption{First step of classifying outliers using the z-score}
+\label{listing:z-score-outlier-calculation}
+\end{listing}
+
+\subsection{Modified z-score}
+The code for calculating the result of the modified z-score (using the \ac{MADN}) is shown in \autoref{listing:madn-z-score-outlier-calculation}.
+\begin{listing}
+\begin{minted}[linenos]{python}
+def madn_z_score_outlier_detection(input_df: pd.DataFrame,
+                                   window: Union[int, None],
+                                   center_window: bool):
+    """
+    Detects outliers in a dataframe using a (moving) average.
+    :param input_df: the input dataframe where the values are stored
+                     in the column water_level
+    :param window: the size of the window, None if no window should
+                   be used
+    :param center_window: whether the window should be centered or not
+    :return: a copy of the input dataframe where the column result
+             should be compared to a threshold to detect outliers
+    """
+    od_df = input_df.copy()
+    if window is None:
+        od_df['median'] = od_df['water_level'].median()
+        od_df['mad'] = np.median(
+            np.abs(od_df['water_level'] - od_df['median']))
+        od_df['madn'] = od_df['mad'] / 0.6745
+    else:
+        od_df['median'] = \
+            od_df['water_level'].rolling(window=window,
+                                         min_periods=1,
+                                         center=center_window).median()
+        od_df['mad'] = \
+            od_df['water_level'].rolling(window=window,
+                                         min_periods=1,
+                                         center=center_window).apply(
+                lambda x: np.median(np.abs(x - np.median(x))))
+        od_df['madn'] = od_df['mad'] / 0.6745
+    od_df['result'] = \
+        (od_df['water_level'] - od_df['median']).abs() \
+            .divide(od_df['madn'])
+    return od_df
+\end{minted}
+\caption{First step of classifying outliers using the modified z-score (\ac{MADN}-z-score)}
+\label{listing:madn-z-score-outlier-calculation}
+\end{listing}
+
+\subsection{Preprocessing the Data}
 \todo{write}
+
+\subsection{Finding Parameters}
+To find the best parameters a grid search was used. The first step was to calculate the results for different methods, window sizes and types (centered an non centered). For each unique parameter combination the result dataframe was stored as a file, where the filename provided information about the parameters. An example for a filename would be ``\verb|12_cw_median.parquet|'', where ``\verb|12|'' is the window size, ``\verb|cw|'' stands for center window (``\verb|nocw|'' is for no center window) and ``\verb|median|'' is the method used. This was done for every unique combination of parameters. The possible values for each parameter, that was used, is listed below.
+\begin{itemize}
+    \item \textbf{normalized}: yes, no
+    \item \textbf{preprocessed}: yes, no 
+    \item \textbf{window size}: None, 2-51 (in steps of one)
+    \item \textbf{centered window}: yes, no
+    \item \textbf{method}: mean, median, mad, z-score, modified z-score (madn-z-score)
+    \item \textbf{common-id}: ``36022-ie'', ``39003-ie'', ``2386-ch'', ``42960105-de'', ``2720050000-de''
+\end{itemize}
+Due to the large number of unique combinations of parameters the size of the resulting files was quite large (multiple Gigabytes). The grid search was executed in parallel using multiprocessing, in order to speed up the process.
+\par
+After the results of each parameter was calculated, for each file a range of thresholds was tested and the performance (confusion matrix and $F_1-score$) of this threshold and the parameters used were saved to a DataFrame. This was also conducted in parallel to decrease the runtime.
+% Develop different outlier detection methods in Python and calculate performance metrics for each
+\todo{include code?}
 \section{Compare different Outlier Detection Approaches}
-Compare detection methods from the previous section.
-\todo{write}
+As expected, using a centered window yields the best $F_1-score$. Furthermore the methods with the best performance are the median and the \ac{MADN} z-score. While the median performed best with smaller window sizes (5-7) the modified z-score performed best with larger window sizes (22-28).
+\todo{compare parameters for different stations and check whether there is a parameter that can universally be used}
+% Compare detection methods from the previous section.
+% \todo{write}
 
