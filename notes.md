@@ -30,16 +30,18 @@ Which Aggregation method is used (Median, mean, min, max...) : MAX
 Okular als PDF Viewer
 
 
-thousands separator in charts needed?
+thousands separator in charts needed? doesn't matter should be uniform for all charts (e.g. 10^n for all)
 
-Image of Map how to reference?
+Image of Map how to reference? kml? image and reference
 
-how much sourcecode? all or only noteworthy parts?
+how much sourcecode? all or only noteworthy parts? only noteworthy parts in the code (can also be just one line). Everything else in the appendix as text (or images).
 
-Do equations need labels?
+Do equations need captions? -> numbers, in the line above or below the equation explain it briefly.
 
-Reference to product name needed?
+Reference to product name needed? e.g. Python, Plotly, Pandas, NumPy... yes reference the websites! TODO!!
 
-Where to include the full source code? appendix
+Where to include the full source code? appendix as listing -> export ipynb as latex, image or .py file
 
-Can the repo of this thesis be public when submitting it? (Concern about plagiarism check)
+Can the repo of this thesis be public when submitting it? (Concern about plagiarism check) no problem
+
+How to reference sources inside of code? as comment
