@@ -137,7 +137,7 @@ To test and tune the outlier detection methods the entire history of data was us
 \par
 The following water level measurement stations were used to test the outlier detection methods.
 \begin{itemize}
-    \item List of station addresses \todo{add final stations}
+    \item List of station addresses \todo{add final stations} \todo{add location description to station list}
 \end{itemize}
 
 
@@ -179,6 +179,8 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 \todo{add comments to code}
 
 \section{Explorative Data Analysis}
+\todo{add another station}
+\todo{add line chart over whole time with 1-2 zooms}
 \subsection{Aghacashlaun Station}
 % Similar to overview of the data
 % \begin{figure}[H]
@@ -262,18 +264,18 @@ To compare the performance of two classification methods a confusion matrix, sho
 \caption{Example of binary confusion matrix}
 \label{table:confusion-matrix}
 \end{table}
-\todo{add reference? \url{https://en.wikipedia.org/w/index.php?title=Confusion_matrix&oldid=1058352752}}
+% ausser publikation welche nur cm behandelt
+% \todo{add reference? \url{https://en.wikipedia.org/w/index.php?title=Confusion_matrix&oldid=1058352752}}
 The green cells represent the correctly classified values (\ac{TP} \& \ac{TN}) and the red cells represent the incorrectly classified values (\ac{FN} \& \ac{FP}). The confusion matrix is the basis of many more performance metrics.
 \subsection{Accuracy}
 To make the comparison easier, the confusion matrix can be aggregated into one single value as a metric. There are numerous ways how this single metric can be calculated. One of the Most common and basic methods is the Accuracy:
-\begin{equation*}
+\begin{equation}
     Accuracy = \frac{Number\,of\,correct\,predictions}{Total\,number\,of\,predictions} = \frac{TP + TN}{TP + FN + TP + FP} = \frac{TP + TN}{P + N}
-\end{equation*}
-\todo{add caption to equations?}
+\end{equation}
 The accuracy provides information what percentage of values are correctly classified. However if the classes are not equally distributed, the accuracy is a bad metric. This is especially true for heavily imbalanced classes. For example if the dataset has $1\,000\,000$ positive values and $10$ negative, when optimizing for a high accuracy it can happen that the classifier predicts every value as positive and still achieves a very high accuracy:
-$$
-Accuracy = \frac{1\,000\,000 + 0}{1\,000\,000 + 10} = 0.99999
-$$
+\begin{equation}
+    Accuracy = \frac{1\,000\,000 + 0}{1\,000\,000 + 10} = 0.99999
+\end{equation}
 Thus for measuring the performance of outliers, the accuracy is not a suitable metric.
 
 \subsection{Precision and Recall}
@@ -284,31 +286,31 @@ Thus for measuring the performance of outliers, the accuracy is not a suitable m
     \caption{Precision vs Recall\cite{PrecisionRecall2022}}
     \label{figure:precision-vs-recall}
 \end{figure}
-\todo{Correct reference of a image used 1:1?}
+% \todo{Correct reference of a image used 1:1? -> yes}
 \subsubsection{Precision}
-\begin{equation*}
+\begin{equation}
     Precision = \frac{TP}{TP + FP}
-\end{equation*}
+\end{equation}
 
 \subsubsection{Recall}
-\begin{equation*}
+\begin{equation}
     Recall = \frac{TP}{TP + FN}
-\end{equation*}
+\end{equation}
 
 \subsection{F-score}
 \label{subsection:f-score}
 The $F_1-score$ is the harmonic mean of the precision and recall.
-\begin{equation*}
+\begin{equation}
     F_1-score = \frac{2}{\frac{1}{Precision} + \frac{1}{Recall}} = \frac{2}{\frac{Precision + Recall}{Precision \cdot Recall}} = \frac{2 \cdot Precision \cdot Recall}{Precision + Recall}
-\end{equation*}
+\end{equation}
 \cite{sasakiTruthFmeasure, chinchorMUC4EvaluationMetrics1992}
 
 The $F_\beta-score$ is more sophisticated compared to the $F_1-score$ where an additional parameter ($\beta$) needs to be chosen, which is used to weight the precision.
-\begin{equation*}
+\begin{equation}
     F_\beta-score = \frac{(\beta^2 + 1) \cdot Precision \cdot Recall}{\beta^2 \cdot Precsion + Recall}
-\end{equation*}
-\cite{tahaMetricsEvaluating3D2015}
-This \cite{tahaMetricsEvaluating3D2015} references \cite{chinchorMUC4EvaluationMetrics1992}.\todo{chech whether this can also be included}
+\end{equation}
+\cite{tahaMetricsEvaluating3D2015, chinchorMUC4EvaluationMetrics1992}
+% This \cite{tahaMetricsEvaluating3D2015} references \cite{chinchorMUC4EvaluationMetrics1992}.\todo{chech whether this can also be included} often both are used.
 
 
 The $F_1-score$ uses $1$ for $\beta$ so the precision and the recall are equally weighted.
@@ -330,7 +332,7 @@ To test the performance of the models the column \verb|is_outlier| contains the 
 \input{tables/36022-ie/36022-ie-9head.tex}
 To speed up the process of calculating the result of the outlier detection method ($|x_t - \hat{x}_t|$, the z-score or the modified z-score) is all done in one step and in the second step the result of this calculation is compared against a range of thresholds.
 \subsection{Mean Threshold}
-Calculating $\hat{x}_t$ using the mean for a pandas DataFrame is quite straightforward and is shown in \autoref{listing:mean-outlier-calculation}.
+Calculating $\hat{x}_t$ using the mean for a pandas DataFrame is quite straightforward and is shown in \autoref{listing:mean-outlier-calculation}. To reduce the amount of duplicate code, the imports are only included in \autoref{listing:mean-outlier-calculation}.
 \begin{listing}
 \begin{minted}[linenos]{python}
 from typing import Union
@@ -518,7 +520,8 @@ def madn_z_score_outlier_detection(input_df: pd.DataFrame,
 
 \subsection{Preprocessing the Data}
 In the preprocessing step outliers which extremely vary from the usual trend of the other values were removed. This was done by defining and upper and lower limit for the data. If a value is not inside this limit it is removed from the dataset. The thought behind preprocessing the data was to increase the model performance by removing extreme outlier values from the beginning. The disadvantage of the preprocessing step is, that two limits need to be defined for each measurement station. The limits need to be chosen carefully. On the one hand, if the valid value range is too large, no extreme outliers are removed and the preprocessing is useless, on the other hand if the valid value range is too small the preprocessing might remove valid values, which would indicate a possible flood. Thus it is also a good idea to regularly check and maybe update those limits.
-\todo{add code?}
+\par
+Core Url: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/preprocessing.ipynb}\todo{add code to appendix}
 
 \subsection{Finding Parameters}
 To find the best parameters a grid search was used. The first step was to calculate the results for different methods, window sizes and types (centered an non centered). For each unique parameter combination the result dataframe was stored as a file, where the filename provided information about the parameters. An example for a filename would be ``\verb|12_cw_median.parquet|'', where ``\verb|12|'' is the window size, ``\verb|cw|'' stands for center window (``\verb|nocw|'' is for no center window) and ``\verb|median|'' is the method used. This was done for every unique combination of parameters. The possible values for each parameter, that was used, is listed below.
@@ -534,11 +537,33 @@ Due to the large number of unique combinations of parameters the size of the res
 \par
 After the results of each parameter was calculated, for each file a range of thresholds was tested and the performance (confusion matrix and $F_1-score$) of this threshold and the parameters used were saved to a DataFrame. This was also conducted in parallel to decrease the runtime.
 % Develop different outlier detection methods in Python and calculate performance metrics for each
-\todo{include code?}
+\par
+Url of Code: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/threshold_based_outlier_detection.py} \todo{include code in appendix}
 \section{Compare different Outlier Detection Approaches}
 As expected, using a centered window yields the best $F_1-score$. Furthermore the methods with the best performance are the median and the \ac{MADN} z-score. While the median performed best with smaller window sizes (5-7) the modified z-score performed best with larger window sizes (22-28).
 \todo{compare parameters for different stations and check whether there is a parameter that can universally be used}
 \todo{add examples for TP, FP, TN and FN}
+\subsection{Station 36022-ie}
+\autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centered moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed equally well regardless of the fact that the data is normalized or not. \todo{think of explanation for that.}
+\todo{change mad-z-score to madn-z-score}
+\input{tables/36022-ie/36022-ie-top-predictions-summary.tex}
+
+\subsection{Station 2386-ch}
+In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown.
+\input{tables/2386-ch/2386-ch-top-predictions-summary.tex}
+
+\subsection{Station 2720050000-de}
+In \autoref{table:2720050000-de-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown.
+\input{tables/2720050000-de/2720050000-de-top-predictions-summary.tex}
+
+\subsection{Station 42960105-de}
+In \autoref{table:42960105-de-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown.
+\input{tables/42960105-de/42960105-de-top-predictions-summary.tex}
+
+\subsection{Station 39003-ie}
+In \autoref{table:39003-ie-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown.
+\input{tables/39003-ie/39003-ie-top-predictions-summary.tex}
+
 % Compare detection methods from the previous section.
 % \todo{write}
 
