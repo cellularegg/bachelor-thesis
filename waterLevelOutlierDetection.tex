@@ -549,18 +549,35 @@ As expected, using a centered window yields the best $F_1-score$. Furthermore th
 \par
 Using the preprocessing (described in \autoref{subsection:data-preprocessing}) usually resulted in a lower performance, when comparing the hightest $F_1-scores$ for both datasets (preprocessed and not preprocessed). The reason for this is, that the outliers removed by the two sided filter were detected as outliers anyway. So just the number of \acp{TP} was reduced. Thus resulting in a slightly lower overall performance, since the outliers were completely removed from the dataset in the preprocessing step.
 
-\todo{add examples for TP, FP, TN and FN}
+\todo{add specific examples for FP and FN}
 \subsection{Station 36022-ie}
 \autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centered moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed equally well regardless of the fact that the data is normalized or not. \todo{think of explanation for that.}
 \todo{change mad-z-score to madn-z-score}
 \input{tables/36022-ie/36022-ie-top-predictions-summary.tex}
 
 \subsection{Station 2386-ch}
-In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown. The outlier detection for this station has the worst performance among those tested.
+In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown. The outlier detection for this station has the worst performance among those tested. The result of this model is shown in \autoref{figure:od-result-example-2386-ch}. Every value above the threshold is classified as an outlier. Every value below the threshold is classified as a regular value.
+
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/2386-ch/od_result_median_2386-ch_all.pdf}
+    \caption{Result of median based outlier detection Murg - Frauenfeld}
+    \label{figure:od-result-example-2386-ch}
+\end{figure}
+
+
 \input{tables/2386-ch/2386-ch-top-predictions-summary.tex}
 
 \subsection{Station 2720050000-de}
-In \autoref{table:2720050000-de-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown.
+In \autoref{table:2720050000-de-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown. With an $F_1-score$ of 0.905109 this station had the best performance. The result of this model is shown in \autoref{figure:od-result-example-202720050000-de}. Every value above the threshold is classified as an outlier. Between 2018 and 2019 an example of a \ac{FP} can be seen (the blue values above the threshold).
+
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/2720050000-de/od_result_median_2720050000-de_all.pdf}
+    \caption{Result of median based outlier detection Sieg - Betzdorf}
+    \label{figure:od-result-example-202720050000-de}
+\end{figure}
+
 \input{tables/2720050000-de/2720050000-de-top-predictions-summary.tex}
 
 \subsection{Station 42960105-de}
