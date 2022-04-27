@@ -518,7 +518,7 @@ def madn_z_score_outlier_detection(input_df: pd.DataFrame,
 \label{listing:madn-z-score-outlier-calculation}
 \end{listing}
 
-\subsection{Preprocessing the Data}
+\subsection{Preprocessing the Data}\label{subsection:data-preprocessing}
 In the preprocessing step outliers which extremely vary from the usual trend of the other values were removed. This was done by defining and upper and lower limit for the data. If a value is not inside this limit it is removed from the dataset. The thought behind preprocessing the data was to increase the model performance by removing extreme outlier values from the beginning. The disadvantage of the preprocessing step is, that two limits need to be defined for each measurement station. The limits need to be chosen carefully. On the one hand, if the valid value range is too large, no extreme outliers are removed and the preprocessing is useless, on the other hand if the valid value range is too small the preprocessing might remove valid values, which would indicate a possible flood. Thus it is also a good idea to regularly check and maybe update those limits.
 \par
 Core Url: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/preprocessing.ipynb}\todo{add code to appendix}
@@ -539,9 +539,16 @@ After the results of each parameter was calculated, for each file a range of thr
 % Develop different outlier detection methods in Python and calculate performance metrics for each
 \par
 Url of Code: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/threshold_based_outlier_detection.py} \todo{include code in appendix}
+
 \section{Compare different Outlier Detection Approaches}
-As expected, using a centered window yields the best $F_1-score$. Furthermore the methods with the best performance are the median and the \ac{MADN} z-score. While the median performed best with smaller window sizes (5-7) the modified z-score performed best with larger window sizes (22-28).
-\todo{compare parameters for different stations and check whether there is a parameter that can universally be used}
+As expected, using a centered window yields the best $F_1-score$. Furthermore the methods with the best performance are the median and the \ac{MADN} z-score. While the median performed best with smaller window sizes (5-7) the modified z-score performed best with larger window sizes (22-28). Using the \ac{MAD} to calculate the $\hat{x_t}$ yields the worst performance.
+\par
+\autoref{table:top-avg-predictions-summary} shows the top 5 average $F_1-scores$ of all stations tested. When using one set of parameters for different measurement stations the median performed best. Using the mean for $\hat{x_t}$ delivered the second best performance, when comparing shared parameters bewteen all tested stations. However the average $F_1-score$ of the mean is only 0.47794, it was reached by using a centered window of size 5, a threshold of 18.87960 and not normalizing the data. Due to the heterogeneity of the fluctuations of the water levels for the different stations it is not recommended to use the same parameters for different stations. Similar or equal parameters should only be used when the water levels of two measurement stations behave similarly. Additionally when using the same parameters for different stations the performance of those parameters should be looked at per station and not as an average of the  $F_1-scores$. This hinders the fact that one model performs perfectly ($F_1-score = 1$) and the other very poorly ($F_1-score = 0.5$). \todo{change average to harmonic mean?}
+\input{tables/top-avg-predictions-summary.tex}
+% \todo{compare parameters for different stations and check whether there is a parameter that can universally be used}
+\par
+Using the preprocessing (described in \autoref{subsection:data-preprocessing}) usually resulted in a lower performance, when comparing the hightest $F_1-scores$ for both datasets (preprocessed and not preprocessed). The reason for this is, that the outliers removed by the two sided filter were detected as outliers anyway. So just the number of \acp{TP} was reduced. Thus resulting in a slightly lower overall performance, since the outliers were completely removed from the dataset in the preprocessing step.
+
 \todo{add examples for TP, FP, TN and FN}
 \subsection{Station 36022-ie}
 \autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centered moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed equally well regardless of the fact that the data is normalized or not. \todo{think of explanation for that.}
@@ -549,7 +556,7 @@ As expected, using a centered window yields the best $F_1-score$. Furthermore th
 \input{tables/36022-ie/36022-ie-top-predictions-summary.tex}
 
 \subsection{Station 2386-ch}
-In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown.
+In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown. The outlier detection for this station has the worst performance among those tested.
 \input{tables/2386-ch/2386-ch-top-predictions-summary.tex}
 
 \subsection{Station 2720050000-de}
