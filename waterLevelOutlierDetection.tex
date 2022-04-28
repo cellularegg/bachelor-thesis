@@ -550,6 +550,50 @@ As expected, using a centered window yields the best $F_1-score$. Furthermore th
 Using the preprocessing (described in \autoref{subsection:data-preprocessing}) usually resulted in a lower performance, when comparing the hightest $F_1-scores$ for both datasets (preprocessed and not preprocessed). The reason for this is, that the outliers removed by the two sided filter were detected as outliers anyway. So just the number of \acp{TP} was reduced. Thus resulting in a slightly lower overall performance, since the outliers were completely removed from the dataset in the preprocessing step.
 
 \todo{add specific examples for FP and FN}
+\subsubsection{Mean}
+\autoref{figure:od-mean-39003-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.68. % 0.6842105263157895
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/39003-ie/od_mean_39003-ie_all.pdf}
+    \caption{Best performance of outlier detection using mean (Crana - Tullyarvan)}
+    \label{figure:od-mean-39003-ie}
+\end{figure}
+
+\subsubsection{Median}
+\autoref{figure:od-median-2720050000-de} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.91. % 0.9051094890510949
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/2720050000-de/od_median_2720050000-de_all.pdf}
+    \caption{Best performance of outlier detection using median (Sieg - Betzdorf)}
+    \label{figure:od-median-2720050000-de}
+\end{figure}
+\subsubsection{MAD}
+\autoref{figure:od-mad-42960105-de} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.45. % 0.45454545454545453
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/42960105-de/od_mad_42960105-de_all.pdf}
+    \caption{Best performance of outlier detection using mad (Losse - Helsa)}
+    \label{figure:od-mad-42960105-de}
+\end{figure}
+
+\subsubsection{Z-score}
+\autoref{figure:od-z-score-39003-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.68. % 0.6776677667766777
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/39003-ie/od_z-score_39003-ie_all.pdf}
+    \caption{Best performance of outlier detection using mad (Crana - Tullyarvan)}
+    \label{figure:od-z-score-39003-ie}
+\end{figure}
+
+\subsubsection{MADN-z-score}
+\autoref{figure:od-madn-z-score-36022-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.79. % 0.7892049598832969
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/36022-ie/od_mad-z-score_36022-ie_all.pdf}
+    \caption{Best performance of outlier detection using \ac{MADN}-z-score (Aghacashlaun - Aghacashlaun)}
+    \label{figure:od-madn-z-score-36022-ie}
+\end{figure}
+
 \subsection{Station 36022-ie}
 \autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centered moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed equally well regardless of the fact that the data is normalized or not. \todo{think of explanation for that.}
 \todo{change mad-z-score to madn-z-score}
@@ -569,7 +613,7 @@ In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per
 \input{tables/2386-ch/2386-ch-top-predictions-summary.tex}
 
 \subsection{Station 2720050000-de}
-In \autoref{table:2720050000-de-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown. With an $F_1-score$ of 0.905109 this station had the best performance. The result of this model is shown in \autoref{figure:od-result-example-202720050000-de}. Every value above the threshold is classified as an outlier. Between 2018 and 2019 an example of a \ac{FP} can be seen (the blue values above the threshold).
+In \autoref{table:2720050000-de-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown. With an $F_1-score$ of 0.905109 this station had the best performance. The result of this model is shown in \autoref{figure:od-result-example-202720050000-de}. Every value above the threshold is classified as an outlier. Between 2018 and 2019 an example of a \ac{FP} can be seen (the orange values above the threshold).
 
 \begin{figure}[htp]
     \centering 
