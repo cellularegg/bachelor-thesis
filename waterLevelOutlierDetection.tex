@@ -27,7 +27,7 @@ Another approach would be to also take future values into consideration when pre
 
 \section{How to retrieve the Data (Description of the API)}
 % Short overview on how to use the API to retrieve data? Python project to retrieve data: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc}
-To make the access to the API easier SOBOS GmbH developed a Python wrapper which returns the requested data as a Pandas dataframe. The code for the Python wrapper is available on GitHub\cite{GitHub}: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc} \cite{strassmayrPegelalarmAPIWrapper2022}
+To make the access to the API easier SOBOS GmbH developed a Python wrapper which returns the requested data as a Pandas dataframe.\cite{PandasDocumentationPandas} The code for the Python wrapper is available on GitHub\cite{GitHub}: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc} \cite{strassmayrPegelalarmAPIWrapper2022}
 
 In order to request data, an API key needs to be requested using credentials. To request the API key a POST request needs to be sent to this endpoint \url{https://api.pegelalarm.at/api/login}, where the request body contains the users' credentials as shown in \autoref{listing:api-key-request-body}. 
 \begin{listing}
@@ -136,6 +136,7 @@ An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/heig
 To test and tune the outlier detection methods the entire history of data was used. The granularity of the data usually is hourly up to the last three months of data. There are a few exceptions, where the granularity is not hourly, because either one or a few datapoints are missing. For the last three months the granularity is ``raw'', which is different for each station. Additionally the base (where the sensor reports water level equals zero) also differs per station. Some station have an arbitrary zero level whereas some stations have the sea level as a base. Thus the water level does not actually reflect the actual height, or depth, of the water. Instead it represents the relative water level to a specific height.
 \par
 The following water level measurement stations were used to test the outlier detection methods.
+\change{Check and maybe remove automatic hyphenation}
 \begin{itemize}
     \item List of station addresses \todo{add final stations} \todo{add location description to station list}
 \end{itemize}
@@ -145,7 +146,7 @@ The following water level measurement stations were used to test the outlier det
 \todo{add examples of outliers in the data}
 % \todo{Describe how the outliers are stored?}
 % Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data) \todo{Remove this}
-In order to speed up the manual labeling of outliers a program was written. The program is a Plotly \todo{add reference} Dash web application which displays the water level data as a scatter chart. 
+In order to speed up the manual labeling of outliers a program was written. The program is a Plotly Dash \cite{DashDocumentationUser} \change{Which reference to add? Website, Documentation or GitHub?} web application which displays the water level data as a scatter chart. 
 By clicking the datapoints in the chart the user is able to toggle the datapoint as an outlier or back to a regular value. 
 In Listing \ref{listing:manual-outlier-selection} the source code of the Dash application is shown. 
 In \ref{figure:manual-outlier-selection} you can see the Website of the Python app. Below the chart a rangeslider is located, to move the zoomed in view horizontally. 
@@ -321,7 +322,7 @@ The $F_1-score$ uses $1$ for $\beta$ so the precision and the recall are equally
 
 \section{Implementation of different Outlier Detection Approaches}
 
-The input data structure for the different approaches is a pandas DataFrame. \todo{add reference?}The structure of the DataFrame is equal for all measurement stations. It contains the following columns:
+The input data structure for the different approaches is a pandas DataFrame.\cite{PandasDocumentationPandas} The structure of the DataFrame is equal for all measurement stations. It contains the following columns:
 \begin{itemize}
     \item \verb|water_level|: the water level of the river in cm (datatype: float64)
     \item \verb|timestamp|: the date and time of the datapoint in UTC (datatype: datetime64[ns, UTC])
@@ -332,7 +333,7 @@ To test the performance of the models the column \verb|is_outlier| contains the 
 \input{tables/36022-ie/36022-ie-9head.tex}
 To speed up the process of calculating the result of the outlier detection method ($|x_t - \hat{x}_t|$, the z-score or the modified z-score) is all done in one step and in the second step the result of this calculation is compared against a range of thresholds.
 \subsection{Mean Threshold}
-Calculating $\hat{x}_t$ using the mean for a pandas DataFrame is quite straightforward and is shown in \autoref{listing:mean-outlier-calculation}. To reduce the amount of duplicate code, the imports are only included in \autoref{listing:mean-outlier-calculation}.
+Calculating $\hat{x}_t$ using the mean for a pandas DataFrame \cite{PandasDocumentationPandas} is quite straightforward and is shown in \autoref{listing:mean-outlier-calculation}. To reduce the amount of duplicate code, the imports are only included in \autoref{listing:mean-outlier-calculation}.
 \begin{listing}
 \begin{minted}[linenos]{python}
 from typing import Union
