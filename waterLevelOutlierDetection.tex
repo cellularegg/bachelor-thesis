@@ -267,9 +267,27 @@ In \autoref{figure:water-level-histogram-36022-ie} histograms of the different w
     \caption{Histogram of the time delta (in hours) of Aghacashlaun - Aghacashlaun}
     \label{figure:time-delta-histogram-36022-ie}
 \end{figure}
+
+In \autoref{figure:linechart-36022-ie} the water level over the time is shown. This chart shows, that the water level usually oscillates between 20 and 100. \autoref{figure:linechart-zoomed-36022-ie} displays an example of subsequence outliers. Within one hour the water level rises by double the previous value. This is very unlikely, thus these values were classified as outliers. The reason, for  multiple consecutive outliers, with decreasing water level over time could be, that the station does not report the actual water level but a moving average over the last few recorded values. This would at least explain the pattern of outliers shown in \autoref{figure:linechart-zoomed-36022-ie}.
+\begin{figure}[htp]
+    \centering
+    \includegraphics{./plots/pdfs/36022-ie/linechart_36022-ie.pdf}
+    \caption{Line chart of Aghacashlaun - Aghacashlaun (whole data)}
+    \label{figure:linechart-36022-ie}
+\end{figure}
+
+\begin{figure}[htp]
+    \centering
+    \includegraphics{./plots/pdfs/36022-ie/slice_linechart_36022-ie.pdf}
+    \caption{Line chart  of Aghacashlaun - Aghacashlaun (2019-10-16 - 2019-10-19)}
+    \label{figure:linechart-zoomed-36022-ie}
+\end{figure}
+
+
 \par
 Code: \cite{zelenayOutlierDetectionWater2022}
-\todo{add descriptions to tables and figures}
+% \todo{add descriptions to tables and figures}
+\clearpage
 
 \section{Outlier Detection performance Metrics}
 \subsection{Confusion Matrix}
