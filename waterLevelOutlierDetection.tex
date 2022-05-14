@@ -223,10 +223,12 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 %     \label{figure:boxplot-36022-ie-outlier}
 % \end{figure}
 \todo{change formatting of tables}
-\input{tables/36022-ie/36022-ie-7-number-summary-all}
+\autoref{table:36022-ie-7-number-summary-all} shows seven number summary for all datapoints (outliers and regular values). The column ``water\_level\_diff'' is the difference in water level between two consecutive datapoints. The column ``timedelta'' is the time difference between two consecutive datapoints in hours. \autoref{table:36022-ie-7-number-summary-regular} and \autoref{table:36022-ie-7-number-summary-outlier} picture seven number summaries for regular and only outlier values. The standard deviation is clearly higher for outlier values when compared to the standard deviation of regular values.
+\input{tables/36022-ie/36022-ie-7-number-summary-all.tex}
 \input{tables/36022-ie/36022-ie-7-number-summary-regular.tex}
 \input{tables/36022-ie/36022-ie-7-number-summary-outlier.tex}
 
+In figure \autoref{figure:class-distribution-36022-ie} the class distribution is shown. The classes are not balanced, there are far more regular values than outliers. This needs to be kept in mind when choosing a performance metric.
 \begin{figure}[htp]
     \centering
     \includegraphics{./plots/pdfs/36022-ie/outlier_class_distribution_36022-ie.pdf}
@@ -234,6 +236,7 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
     \label{figure:class-distribution-36022-ie}
 \end{figure}
 
+\autoref{figure:boxplot-36022-ie} shows boxplots for all values, regular values and outlier values. The boxplots show, that the upper and lower whisker boundaries cannot be used to classify outliers reliably. Since there are many regular values that exceed the upper limit of the whisker, which is 1.5 times the \ac{IQR}.
 \begin{figure}[htp]
     \centering
     \includegraphics{./plots/pdfs/36022-ie/boxplot_36022-ie.pdf}
@@ -241,6 +244,8 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
     \label{figure:boxplot-36022-ie}
 \end{figure}
 
+
+In \autoref{figure:water-level-histogram-36022-ie} histograms of the different water levels are shown. The y-axis is scaled logarithmically, so less common values are also visible. The histogram shows, that values between 20 and 40 are most common and the higher the water level is the less common it becomes. \autoref{figure:water-level-delta-histogram-36022-ie} is quite similar, but instead of the water level the difference in water level between two consecutive datapoints is used.
 \begin{figure}[htp]
     \centering 
     \includegraphics{./plots/pdfs/36022-ie/water_level_histogram_36022-ie.pdf}
@@ -255,6 +260,7 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
     \label{figure:water-level-delta-histogram-36022-ie}
 \end{figure}
 
+\autoref{figure:time-delta-histogram-36022-ie} Shows the histogram of the time difference, in hours, between each datapoint. The largest gap of data is 178 hours, which is about one week.
 \begin{figure}[htp]
     \centering
     \includegraphics{./plots/pdfs/36022-ie/time_delta_histogram_36022-ie.pdf}
