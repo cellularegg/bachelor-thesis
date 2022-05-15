@@ -135,7 +135,7 @@ An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/heig
 \section{Overview of the Data}
 To test and tune the outlier detection methods the entire history of data was used. The granularity of the data usually is hourly up to the last three months of data. There are a few exceptions, where the granularity is not hourly, because either one or a few datapoints are missing. For the last three months the granularity is ``raw'', which is different for each station. Additionally the base (where the sensor reports water level equals zero) also differs per station. Some station have an arbitrary zero level whereas some stations have the sea level as a base. Thus the water level does not actually reflect the actual height, or depth, of the water. Instead it represents the relative water level to a specific height.
 \par
-The following water level measurement stations were used to test the outlier detection methods.
+The following water level measurement stations were used to test the outlier detection methods:
 \change{Check and maybe remove automatic hyphenation}
 % \begin{itemize}
 %     % \item List of station addresses \todo{add final stations} 
@@ -146,22 +146,35 @@ The following water level measurement stations were used to test the outlier det
 %     \item Station 42960105-de
 %     \item Station 39003-ie
 % \end{itemize}
-\subsubsection{Station Aghacashlaun, Aghacashlaun (36022-ie)}
-This station, on the river Aghacashlaun and in the area of Aghacashlaun, is located in northern Ireland. The coordinates of this station are: 54.03647, -7.94672 (\ac{Lat}, \ac{Long}). \cite{StationAghacashlaunAghacashlaun}
+\begin{itemize}
+    \item \textbf{Station Aghacashlaun, Aghacashlaun (36022-ie)} \newline
+    This station, on the river Aghacashlaun and in the area of Aghacashlaun, is located in northern Ireland. The coordinates of this station are: 54.03647, -7.94672 (\ac{Lat}, \ac{Long}). \cite{StationAghacashlaunAghacashlaun}
+    \item \textbf{Station Murg, Frauenfeld (2386-ch)} \newline
+    The station, on the river Murg and in the area of Frauenfeld, is located in northern Switzerland. The coordinates of this station are: 47.56852, 8.89432 (\ac{Lat}, \ac{Long}). \cite{StationMurgFrauenfeld}
+    \item \textbf{Station Sieg, Betzdorf (2720050000-de)} \newline
+    The station, on the river Sieg and in the area of Betzdorf, is located in western Germany. The coordinates of this station are: 50.79332, 7.86390 (\ac{Lat}, \ac{Long}). \cite{StationSiegBetzdorf}
+    \item \textbf{Station Losse, Helsa (42960105-de)} \newline
+    The station, on the river Losse and in the area of Helsa, is located in central Germany . The coordinates of this station are: 51.25574, 9.68537 (\ac{Lat}, \ac{Long}). \cite{StationLosseHelsa}
+    \item \textbf{Station Crana, Tullyarvan (39003-ie)} \newline
+    The station, on the river Crana and in the area of Tullyarvan, is located in northern Ireland. The coordinates of this station are: 55.14356, -7.45239 (\ac{Lat}, \ac{Long}). \cite{StationCranaTullyarvan}
+    
+\end{itemize}
+% \subsubsection{Station Aghacashlaun, Aghacashlaun (36022-ie)}
+% This station, on the river Aghacashlaun and in the area of Aghacashlaun, is located in northern Ireland. The coordinates of this station are: 54.03647, -7.94672 (\ac{Lat}, \ac{Long}). \cite{StationAghacashlaunAghacashlaun}
 
-\subsubsection{Station Murg, Frauenfeld (2386-ch)}
-The station, on the river Murg and in the area of Frauenfeld, is located in northern Switzerland. The coordinates of this station are: 47.56852, 8.89432 (\ac{Lat}, \ac{Long}). \cite{StationMurgFrauenfeld}
+% \subsubsection{Station Murg, Frauenfeld (2386-ch)}
+% The station, on the river Murg and in the area of Frauenfeld, is located in northern Switzerland. The coordinates of this station are: 47.56852, 8.89432 (\ac{Lat}, \ac{Long}). \cite{StationMurgFrauenfeld}
 
-\subsubsection{Station Sieg, Betzdorf (2720050000-de)}
-The station, on the river Sieg and in the area of Betzdorf, is located in western Germany. The coordinates of this station are: 50.79332, 7.86390 (\ac{Lat}, \ac{Long}). \cite{StationSiegBetzdorf}
+% \subsubsection{Station Sieg, Betzdorf (2720050000-de)}
+% The station, on the river Sieg and in the area of Betzdorf, is located in western Germany. The coordinates of this station are: 50.79332, 7.86390 (\ac{Lat}, \ac{Long}). \cite{StationSiegBetzdorf}
 
-\subsubsection{Station Losse, Helsa (42960105-de)}
-The station, on the river Losse and in the area of Helsa, is located in central Germany . The coordinates of this station are: 51.25574, 9.68537 (\ac{Lat}, \ac{Long}). \cite{StationLosseHelsa}
+% \subsubsection{Station Losse, Helsa (42960105-de)}
+% The station, on the river Losse and in the area of Helsa, is located in central Germany . The coordinates of this station are: 51.25574, 9.68537 (\ac{Lat}, \ac{Long}). \cite{StationLosseHelsa}
 
-\subsubsection{Station Crana, Tullyarvan (39003-ie)}
-The station, on the river Crana and in the area of Tullyarvan, is located in northern Ireland. The coordinates of this station are: 55.14356, -7.45239 (\ac{Lat}, \ac{Long}). \cite{StationCranaTullyarvan}
+% \subsubsection{Station Crana, Tullyarvan (39003-ie)}
+% The station, on the river Crana and in the area of Tullyarvan, is located in northern Ireland. The coordinates of this station are: 55.14356, -7.45239 (\ac{Lat}, \ac{Long}). \cite{StationCranaTullyarvan}
 
-\section{Manually detect outliers for a subset of data}
+\section{Manual Classification of Outliers}
 % \todo{add examples of outliers in the data}
 % \todo{Describe how the outliers are stored?}
 % Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data) \todo{Remove this}
@@ -193,14 +206,14 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 % \label{code:manual-outlier-selection}
 % \end{listing}
 
-\subsubsection{Manual Outlier Detection Webapp using Dash}
+\subsubsection{Manual Outlier Detection Webapp using Dash} \change{Move do Appendix}
 \inputminted[linenos]{python}{./code/manual_outlier_detection.py}
 \captionof{listing}{Manual Outlier Detection Webapp using Dash\label{listing:manual-outlier-selection}}
-\todo{add comments to code}
+% \todo{add comments to code}
 
 \section{Explorative Data Analysis}
 \todo{add another station}
-\todo{add line chart over whole time with 1-2 zooms}
+% \todo{add line chart over whole time with 1-2 zooms}
 \subsection{Aghacashlaun Station}
 % Similar to overview of the data
 % \begin{figure}[H]
@@ -222,7 +235,7 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 %     \caption{Boxplot of Aghacashlaun - Aghacashlaun containing outlier values}
 %     \label{figure:boxplot-36022-ie-outlier}
 % \end{figure}
-\todo{change formatting of tables}
+% \todo{change formatting of tables}
 \autoref{table:36022-ie-7-number-summary-all} shows seven number summary for all datapoints (outliers and regular values). The column ``water\_level\_diff'' is the difference in water level between two consecutive datapoints. The column ``timedelta'' is the time difference between two consecutive datapoints in hours. \autoref{table:36022-ie-7-number-summary-regular} and \autoref{table:36022-ie-7-number-summary-outlier} picture seven number summaries for regular and only outlier values. The standard deviation is clearly higher for outlier values when compared to the standard deviation of regular values.
 \input{tables/36022-ie/36022-ie-7-number-summary-all.tex}
 \input{tables/36022-ie/36022-ie-7-number-summary-regular.tex}
@@ -587,13 +600,15 @@ Url of Code: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/
 \section{Compare different Outlier Detection Approaches}
 As expected, using a centered window yields the best $F_1-score$. Furthermore the methods with the best performance are the median and the \ac{MADN} z-score. While the median performed best with smaller window sizes (5-7) the modified z-score performed best with larger window sizes (22-28). Using the \ac{MAD} to calculate the $\hat{x_t}$ yields the worst performance.
 \par
-\autoref{table:top-avg-predictions-summary} shows the top 5 average $F_1-scores$ of all stations tested. When using one set of parameters for different measurement stations the median performed best. Using the mean for $\hat{x_t}$ delivered the second best performance, when comparing shared parameters bewteen all tested stations. However the average $F_1-score$ of the mean is only 0.47794, it was reached by using a centered window of size 5, a threshold of 18.87960 and not normalizing the data. Due to the heterogeneity of the fluctuations of the water levels for the different stations it is not recommended to use the same parameters for different stations. Similar or equal parameters should only be used when the water levels of two measurement stations behave similarly. Additionally when using the same parameters for different stations the performance of those parameters should be looked at per station and not as an average of the  $F_1-scores$. This hinders the fact that one model performs perfectly ($F_1-score = 1$) and the other very poorly ($F_1-score = 0.5$). \todo{change average to harmonic mean?}
+\autoref{table:top-avg-predictions-summary} shows the top 5 average $F_1-scores$ of all stations tested. When using one set of parameters for different measurement stations the median performed best. Using the mean for $\hat{x_t}$ delivered the second best performance, when comparing shared parameters bewteen all tested stations. However the average $F_1-score$ of the mean is only 0.47794, it was reached by using a centered window of size 5, a threshold of 18.87960 and not normalizing the data. Due to the heterogeneity of the fluctuations of the water levels for the different stations it is not recommended to use the same parameters for different stations. Similar or equal parameters should only be used when the water levels of two measurement stations behave similarly. Additionally when using the same parameters for different stations the performance of those parameters should be looked at per station and not as an average of the  $F_1-scores$. This hinders the fact that one model performs perfectly ($F_1-score = 1$) and the other very poorly ($F_1-score = 0.5$). 
+% \todo{change average to harmonic mean?}
 \input{tables/top-avg-predictions-summary.tex}
 % \todo{compare parameters for different stations and check whether there is a parameter that can universally be used}
 \par
 Using the preprocessing (described in \autoref{subsection:data-preprocessing}) usually resulted in a lower performance, when comparing the hightest $F_1-scores$ for both datasets (preprocessed and not preprocessed). The reason for this is, that the outliers removed by the two sided filter were detected as outliers anyway. So just the number of \acp{TP} was reduced. Thus resulting in a slightly lower overall performance, since the outliers were completely removed from the dataset in the preprocessing step.
 
-\todo{add specific examples for FP and FN}
+\todo{add specific examples for FP and FN???}
+\change{Add values of Precision and Recall for each O.D. Method}
 \subsubsection{Mean}
 \autoref{figure:od-mean-39003-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.68. % 0.6842105263157895
 \begin{figure}[htp]
@@ -638,12 +653,13 @@ Using the preprocessing (described in \autoref{subsection:data-preprocessing}) u
     \label{figure:od-madn-z-score-36022-ie}
 \end{figure}
 
-\subsection{Station 36022-ie}
-\autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centered moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed equally well regardless of the fact that the data is normalized or not. \todo{think of explanation for that.}
-\todo{change mad-z-score to madn-z-score}
+\subsection{Station Aghacashlaun, Aghacashlaun (36022-ie)}
+\autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centered moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed equally well regardless of the fact that the data is normalized or not.
+% \todo{think of explanation for that.}
+% \todo{change mad-z-score to madn-z-score}
 \input{tables/36022-ie/36022-ie-top-predictions-summary.tex}
 
-\subsection{Station 2386-ch}
+\subsection{Station Murg, Frauenfeld (2386-ch)}
 In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown. The outlier detection for this station has the worst performance among those tested. The result of this model is shown in \autoref{figure:od-result-example-2386-ch}. Every value above the threshold is classified as an outlier. Every value below the threshold is classified as a regular value.
 
 \begin{figure}[htp]
@@ -656,7 +672,7 @@ In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per
 
 \input{tables/2386-ch/2386-ch-top-predictions-summary.tex}
 
-\subsection{Station 2720050000-de}
+\subsection{Station Sieg, Betzdorf (2720050000-de)}
 In \autoref{table:2720050000-de-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown. With an $F_1-score$ of 0.905109 this station had the best performance. The result of this model is shown in \autoref{figure:od-result-example-202720050000-de}. Every value above the threshold is classified as an outlier. Between 2018 and 2019 an example of a \ac{FP} can be seen (the orange values above the threshold).
 
 \begin{figure}[htp]
@@ -668,11 +684,11 @@ In \autoref{table:2720050000-de-top-predictions-summary} the top three predictio
 
 \input{tables/2720050000-de/2720050000-de-top-predictions-summary.tex}
 
-\subsection{Station 42960105-de}
+\subsection{Station Losse, Helsa (42960105-de)}
 In \autoref{table:42960105-de-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown.
 \input{tables/42960105-de/42960105-de-top-predictions-summary.tex}
 
-\subsection{Station 39003-ie}
+\subsection{Station Crana, Tullyarvan (39003-ie)}
 In \autoref{table:39003-ie-top-predictions-summary} the top three predictions per model for normalized and not not normalized data is shown.
 \input{tables/39003-ie/39003-ie-top-predictions-summary.tex}
 
