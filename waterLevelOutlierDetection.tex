@@ -154,7 +154,7 @@ The following water level measurement stations were used to test the outlier det
     \item \textbf{Station Sieg, Betzdorf (2720050000-de)} \newline
     The station, on the river Sieg and in the area of Betzdorf, is located in western Germany. The coordinates of this station are: 50.79332, 7.86390 (\ac{Lat}, \ac{Long}). \cite{StationSiegBetzdorf}
     \item \textbf{Station Losse, Helsa (42960105-de)} \newline
-    The station, on the river Losse and in the area of Helsa, is located in central Germany . The coordinates of this station are: 51.25574, 9.68537 (\ac{Lat}, \ac{Long}). \cite{StationLosseHelsa}
+    The station, on the river Losse and in the area of Helsa, is located in central Germany. The coordinates of this station are: 51.25574, 9.68537 (\ac{Lat}, \ac{Long}). \cite{StationLosseHelsa}
     \item \textbf{Station Crana, Tullyarvan (39003-ie)} \newline
     The station, on the river Crana and in the area of Tullyarvan, is located in northern Ireland. The coordinates of this station are: 55.14356, -7.45239 (\ac{Lat}, \ac{Long}). \cite{StationCranaTullyarvan}
     
@@ -608,7 +608,7 @@ As expected, using a centered window yields the best $F_1-score$. Furthermore th
 Using the preprocessing (described in \autoref{subsection:data-preprocessing}) usually resulted in a lower performance, when comparing the hightest $F_1-scores$ for both datasets (preprocessed and not preprocessed). The reason for this is, that the outliers removed by the two sided filter were detected as outliers anyway. So just the number of \acp{TP} was reduced. Thus resulting in a slightly lower overall performance, since the outliers were completely removed from the dataset in the preprocessing step.
 
 \todo{add specific examples for FP and FN???}
-\change{Add values of Precision and Recall for each O.D. Method}
+\todo{Add values of Precision and Recall for each O.D. Method}
 \subsubsection{Mean}
 \autoref{figure:od-mean-39003-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.68. % 0.6842105263157895
 \begin{figure}[htp]

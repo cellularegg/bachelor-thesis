@@ -2,7 +2,8 @@
 \section{Outlier Types}\label{section:outlier-detection}
 Outliers can be categorized as point outliers or subsequence outliers.
 \subsubsection{Point Outliers}
-A point outlier is a single datapoint that strongly varies from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020} Examples of three point outliers are shown in \autoref{figure:point-outliers}. \hl{Point outliers are usually easier to detect than subsequence outliers. } \change{Lassen sich diese "outliers" algorithmisch erfassen/detektieren?}
+A point outlier is a single datapoint that strongly varies from the usual trend of the datapoints. \cite{blazquez-garciaReviewOutlierAnomaly2020} Examples of three point outliers are shown in \autoref{figure:point-outliers}. 
+\hl{Methods to detect outliers are described in} \autoref{section:outlier-detection-approaches} \change{Lassen sich diese "outliers" algorithmisch erfassen/detektieren?}
 \begin{figure}[h]
   \centering
   \includegraphics{./plots/pdfs/point_outliers.pdf}
@@ -128,7 +129,7 @@ To check whether the value $x_t$ is an outlier the absolute of its z-score is co
 \begin{equation}
   |z_t| > \tau
 \end{equation}
-\section{Outlier Detection using modified z-score}
+\section{Outlier Detection using modified z-score}\label{section:outlier-detection-modified-z-score}
 Because the mean and standard deviation are not robust towards outliers the z-score can be modified to use more robust metrics for the expected value and the variation of the values. To make the outlier detection with the z-score more robust the mean can be replaced with the median and the standard deviation with the \ac{MAD} or the \ac{MADN}. A possible formula for a modified z-score, as described in \cite{baeOutlierDetectionSmoothing2019}, could be:
 \begin{equation}
   m_t = \frac{|x_t - median(X)|}{MADN(X)}
