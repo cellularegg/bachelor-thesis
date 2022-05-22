@@ -4,17 +4,18 @@ This bachelor thesis provides an overview of the topic anomaly detection, especi
 % There are countless methods to detect anomalies in data. There is not a go-to approach that suits all needs. It is required to assess different approaches for different applications, in order to get the best result. This paper should provide an overview of approaches to detect outliers / anomalies. It depends on the use case which method to detect outliers has the highest success rate.  
 The overall bes performance, across different water level measurement stations, was achieved by using the median threshold based outlier detection method with a centered window with the size of three and a threshold of about 6.6. The median threshold based outlier detection also delivered the hightest $F_1-score\;(0.905)$. Using the mean to calculate $\hat{x}_t$ is not recommended since the mean is not robust against outliers. Using the \ac{MAD} with the threshold based outlier detection resulted in the lowest $F_1-score$, with the best score only being about 0.45. The second best result was achieved by using the modified z-score described in \autoref{section:outlier-detection-modified-z-score}. For the stations tested the approach using the median delivered the best performances. However this does not mean, that this will be true for all stations. It has to be assessed for each station individually which model is able to detect best. Furthermore it depends on the use case if higher precision or recall is required. Depending on that, $\beta$ for the $F_{\beta}-score$ needs to be chosen accordingly. For the tests the $F_1-score$ was used since precision and recall are equally important. In addition preprocessing the data by setting upper and lower boundaries and removing datapoints which exceed those limits, did not improve the performance of the models, on the contrary the performance was worse. Because the extreme outliers were mostly detected anyways, thus fewer outliers were detected when setting upper and lower limits, which resulted in a lower performance.
 
-\change{Ich schlage hier vor auch einen Teil der quanitativen Analyse zusammenzufassen. Dabei sollten die Methoden und die Ergebnisse kurz skizziert werden. Vielleicht lassen sich auch Entscheidungen ableiten wann welche Methode besser greift.}
+% \change{Ich schlage hier vor auch einen Teil der quanitativen Analyse zusammenzufassen. Dabei sollten die Methoden und die Ergebnisse kurz skizziert werden. Vielleicht lassen sich auch Entscheidungen ableiten wann welche Methode besser greift.}
 % \todo{Change this! Currently copied from the paper.}
 % \section{Advantages and Disadvantages of used Outlier Detection Methods}
 % \todo{write}
 \chapter{Future Work}
-Chapter about which additional approaches could be tested:
-\begin{itemize}
-    \item setting a maximum gradient for both directions (one for rising and falling values) for each measurement station.
-    \item \acp{ANN} with \ac{LSTM} or \ac{GRU} maybe also autoencoder architecture
-    \item Prediction vs classification \ac{ANN}
-    \item 1.5 times the \ac{IQR}
-\end{itemize} 
-\todo{Should I also include this or is this not common for a bachelor thesis? -> YES}
-\change{Die Methode wollte ich auch vorschlagen, aber der Umfang ist so schon gross genug.}
+There are countless outlier detection approaches, which can be applied for time series data, that have not been covered in detail in this paper. For example one approach could be setting a maximum gradient for both directions (one for falling and one for rising values) for each measurement station. If the water level measurements exceed the maximum gradient then the value is classified as an outlier. Another approach would be to use \acp{ANN} with either \ac{LSTM}, \ac{GRU} or an autoencoder architecture. Additionally prediction and classification \acp{ANN} could be compared to see, which approach performs better. 
+% Some ideas for future work are:
+% \begin{itemize}
+%     \item setting a maximum gradient for both directions (one for rising and falling values) for each measurement station.
+%     \item \acp{ANN} with \ac{LSTM} or \ac{GRU} maybe also autoencoder architecture
+%     \item Prediction vs classification \ac{ANN}
+%     \item 1.5 times the \ac{IQR}
+% \end{itemize} 
+% \todo{Should I also include this or is this not common for a bachelor thesis? -> YES}
+% \change{Die Methode wollte ich auch vorschlagen, aber der Umfang ist so schon gross genug.}
