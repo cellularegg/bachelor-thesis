@@ -5,10 +5,10 @@ This section will provide a few example key features of data quality.
 \subsubsection{Completeness}
 Data completeness describes the wholeness of data. If there are certain aspects of data missing the data is not complete. For example if each datapoint of a sensor includes the date, time and production speed, the data is not complete, if one of those features is missing or not entire, this datapoint is not complete. \cite{caiChallengesDataQuality2015, songIoTDataQuality2020}
 \subsubsection{Accuracy}
-The accuracy of data describes the exactness. Example for possible data which decrease the accuracy are outliers or time shifts. Usually the accuracy of data is harder to measure than the completeness, consistency, structure or documentation. Due to the heterogeneity of sensor data (regarding numerical values like production speed or temperature, not categorical values like on/off) for each datapoint it is difficult to detect which values are genuine and which are sensor errors and therefore outliers. \cite{caiChallengesDataQuality2015}
-\hl{Mention this briefly because float cannot be 100\% exact, }
+The accuracy of data describes the exactness. Example for possible data which decrease the accuracy are outliers or time shifts. Usually the accuracy of data is harder to measure than the completeness, consistency, structure or documentation. Due to the heterogeneity of sensor data (regarding numerical values like production speed or temperature, not categorical values like on/off) for each datapoint it is difficult to detect which values are genuine and which are sensor errors and therefore outliers. \cite{caiChallengesDataQuality2015} Furthermore an obstacle to accurate data are calculation errors made by computers, because the datatype (e.g. float) is not always 100\% exact. However there are methods to reduce these errors. Nevertheless this also needs to be considered when talking about accurate data.\cite{goldbergWhatEveryComputer1991, WhatEveryComputer} 
+% \hl{Mention this briefly because float cannot be 100\% exact, }
 % https://docs.oracle.com/cd/E19957-01/806-3568/ncg_goldberg.html
-\change{Man kann hier auch den Rechenfehler von Operationen in Computern anführen. Bei bestimmten Operationen wird darauf im Code Rücksicht genommen.}
+% \change{Man kann hier auch den Rechenfehler von Operationen in Computern anführen. Bei bestimmten Operationen wird darauf im Code Rücksicht genommen.}
 
 \subsubsection{Consistency}
 One example for consistency would be, if the data interval is equal. For example there should be a datapoint every ten seconds. As soon as two datapoints are more than ten seconds apart from each other the data is not consistent anymore. \cite{caiChallengesDataQuality2015}
