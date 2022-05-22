@@ -78,30 +78,26 @@ Depending on the sensitivity wanted for outlier detection an appropriate $\tau$ 
 \begin{equation}
   \text{mean} = \bar{x} = \frac{1}{n} \sum^n_{t=0}x_t
 \end{equation}
-
 Where $n$ is the total number of samples. Using the mean as an expected value is not robust to outliers, because the mean is not as robust as the median in hindsight to outliers. To calculate the mean all data points of a series must be summed up and then divided by the number of data points.
 \subsubsection{Median}
 If $n$ is odd:
 \begin{equation}
   median(x) = x_{(n+1)/2}
 \end{equation}
-
 If $n$ is even:
 \begin{equation}
   median(x) = \frac{x_{n/2} + x_{(n+1)/2}}{2}
 \end{equation}
-
 Where $x$ is a dataset of $n$ elements ordered from smallest to largest\\
 ($x_1 \leq x_2 \leq x_3 \leq \ldots \leq x_{n-2} \leq x_{n-1} \leq x_n$)
 \cite{blazquez-garciaReviewOutlierAnomaly2020}
 To calculate the median all values must be sorted from smallest to largest. If the number of data points is odd then the most centre data point is the Median (e.g. if the series consist of 7 values the third value is the median). If the number of data points is even, then the median is the mean of the two data points in the centre.
 \subsubsection{\ac{MAD}}
-The Median Absolute Deviation 
+The Median Absolute Deviation is defined as followed:
 \begin{equation}
   MAD = median(|x_t - median(x)|)
 \end{equation}
-
-$MAD$ is a more robust (regarding outliers) way to calculate the deviation of a dataset. To calculate the $MAD$ firstly the median of the dataset must be calculated. Then the absolute difference between $x_t$ and the median of the dataset is calculated. The Median of all differences results in the $MAD$
+The \ac{MAD} is a more robust (regarding outliers) way to calculate the deviation of a dataset. To calculate the \ac{MAD} firstly the median of the dataset must be calculated. Then the absolute difference between $x_t$ and the median of the dataset is calculated. The Median of all differences results in the \ac{MAD}
 \cite{leysDetectingOutliersNot2013, mehrangOutlierDetectionWeight2015}
 
 \section{Outlier Detection using z-score}
@@ -111,7 +107,6 @@ A visual representation of the z-score in a normal distribution is shown in \aut
 \begin{equation}
   z_t = \frac{x_t - \mu}{\sigma}
 \end{equation}
-
 Where $\mu$ is the mean of the dataset and $\sigma$ is the standard deviation. When the mean and the standard deviation of the entire dataset are not known, the mean and the standard deviation of a known sample can be used.
 \cite{DetectionSpatialOutlier, teschlSpezielleStetigeVerteilungen2014, rousseeuwAnomalyDetectionRobust2018}
 \begin{figure}[H]
@@ -123,8 +118,7 @@ Where $\mu$ is the mean of the dataset and $\sigma$ is the standard deviation. W
 \begin{equation}
   \sigma = s = \sqrt{\frac{1}{n-1}\sum^n_{i=1}{(x_i - \bar{x})^2}}
 \end{equation}
-\cite{teschlSpezielleStetigeVerteilungen2014, rousseeuwAnomalyDetectionRobust2018}
-\par
+\cite{teschlSpezielleStetigeVerteilungen2014, rousseeuwAnomalyDetectionRobust2018}\newline
 To check whether the value $x_t$ is an outlier the absolute of its z-score is compared against a threshold ($\tau$) and if the absolute value of the z-score exceeds the threshold $x_t$ is classified as an outlier.
 \begin{equation}
   |z_t| > \tau

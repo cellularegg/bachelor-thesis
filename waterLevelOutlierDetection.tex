@@ -1,7 +1,7 @@
 \chapter{Outlier Detection based on Water Level Data}
 FloodAlert (or ``Pegelalarm'' in German) is a service, that provides water levels from about 30,000 measurement stations. It provides notifications to registered individuals when a certain water level threshold is reached. Thus warning people about possible floods in their area. \cite{strassmayrFloodAlertWaterLevels}
-
-
+\newline
+\newline
 Unfortunately, sometimes an incorrect water level is reported by the sensors, which are not maintained by the team of FloodAlert. FloodAlert just fetches the data from different maintainers of sensors. To reduce the frequency of false alarms, outliers should be identified and flagged. The theoretical parts of the previous sections are applied and tested on real-world data.
 % Create a connection between the theoretical descriptions of outlier detections to a real world use case. Data from \url{https://pegelalarm.at/}
 % \todo{write}
@@ -28,7 +28,8 @@ Another approach would be to also take future values into consideration when pre
 \section{How to retrieve the Data (Description of the API)}
 % Short overview on how to use the API to retrieve data? Python project to retrieve data: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc}
 To make the access to the API easier SOBOS GmbH developed a Python wrapper which returns the requested data as a Pandas dataframe.\cite{PandasDocumentationPandas} The code for the Python wrapper is available on GitHub\cite{GitHub}: \url{https://github.com/SOBOS-GmbH/pegelalarm_public_pas_doc} \cite{strassmayrPegelalarmAPIWrapper2022}
-
+\newline
+\newline
 In order to request data, an API key needs to be requested using credentials. To request the API key a POST request needs to be sent to this endpoint \url{https://api.pegelalarm.at/api/login}, where the request body contains the users' credentials as shown in \autoref{listing:api-key-request-body}. 
 \begin{listing}
 \begin{minted}[linenos]{json}
@@ -41,7 +42,7 @@ In order to request data, an API key needs to be requested using credentials. To
 \label{listing:api-key-request-body}
 \end{listing}
 To generate the actual API key, the key from the response needs to be hashed using the \ac{HMAC} Algorithm. This is done using Python's built-in ``hmac'' module \cite{HmacKeyedHashingMessage}. Afterwards, the \ac{HMAC} is byte64 encoded, so it can be sent in the ``X-AUTH-TOKEN'' header field.
-
+\newline
 To get the unique identifier for a specific measurement station the list endpoint can be used. Which accepts three optional query parameters (qStationName - station name, qWater - water name and commonid - the unique identifier of a station) and returns a list of matching stations with metadata like coordinates, country or last water level. E.g. to retrieve the identifier of the Danube station located in Linz the URL is the following: \url{https://api.pegelalarm.at/api/station/1.1/list?qStationName=Linz&qWater=Donau}. Keep in mind in order to retrieve any data the header value ``X-AUTH-TOKEN'' must be set. An example response to this request is shown in \autoref{listing:response-list-endpoint}. Where the unique identifier is the ``commonid'' in line 9.
 \begin{listing}
 \begin{minted}[linenos]{json}
@@ -84,7 +85,7 @@ To get the unique identifier for a specific measurement station the list endpoin
 \caption{Example response of the list endpoint}
 \label{listing:response-list-endpoint}
 \end{listing}
-
+\newline
 To retrieve historical data the history endpoint can be used. The request URL has the following structure: \url{https://api.pegelalarm.at/api/station/1.1/<unit>/<commonid>/history?<parameters>}. The unit can either be ``height'' or ``flow''. For this thesis, only height data was used. The following parameters can be set:
 \begin{itemize}
     \item \textbf{loadStartDate}: The start timestamp of the queried data.
@@ -93,7 +94,7 @@ To retrieve historical data the history endpoint can be used. The request URL ha
 \end{itemize}
 Possible values for the granularity are: ``raw'' (only available for the last 3 months of data), ``hour'', ``day'', ``month'', ``year'' or ``era'' (era returns one value for a given time)
 When requesting aggregated data (anything other than ``raw''), the maximum value of the timespan is used. The timestamps are in the following format: ``<DD>.<MM>.<YYYY>T<HH>:<MM>:<SS><+-UTCOFFSET>'', where the `+' is URL encoded to ``\%2B''. E.g.: ``31.03.2022T13:35:40\%2B0200''. If no parameters are provided the API returns the last few data points.
-
+\newline
 An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/height/207068-at/history?loadStartDate=01.03.2022T13:35:40%2B0200&loadEndDate=01.03.2022T18:00:00%2B0200&granularity=hour} The result of this request is shown in \autoref{listing:water-level-data-response}.
 
 \begin{listing}
@@ -134,7 +135,7 @@ An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/heig
 
 \section{Overview of the Data}
 To test and tune the outlier detection methods the entire history of data was used. The granularity of the data usually is hourly up to the last three months of data. There are a few exceptions, where the granularity is not hourly, because either one or a few data points are missing. For the last three months, the granularity is ``raw'', which is different for each station. Additionally, the base (where the sensor reports water level equals zero) also differs per station. Some stations have an arbitrary zero level whereas some stations use the sea level as a base. Thus the water level does not actually reflect the actual height, or depth, of the water. Instead, it represents the relative water level to a specific height.
-\par
+\newline
 The following water level measurement stations were used to test the outlier detection methods:
 % \change{Check and maybe remove automatic hyphenation}
 % \begin{itemize}
@@ -180,8 +181,8 @@ The following water level measurement stations were used to test the outlier det
 % Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data) \todo{Remove this}
 In order to speed up the manual labelling of outliers, a program was written. The program is a Plotly Dash \cite{DashDocumentationUser} web application which displays the water level data as a scatter chart. 
 By clicking the data points in the chart the user is able to toggle the data point as an outlier or back to a regular value. 
-In Listing \autoref{listing:manual-outlier-selection} the source code of the Dash application is shown. 
-In \autoref{figure:manual-outlier-selection} the Website of the Python app is shown. The red dots between 25 and October 28 are already classified as outliers. Below the chart a range slider is located, to move the zoomed-in view horizontally. 
+In \autoref{listing:manual-outlier-selection} the source code of the Dash application is shown. 
+In \autoref{figure:manual-outlier-selection} the Website of the Python app is shown. The red dots between October 25 and October 27 are already classified as outliers. Below the chart a range slider is located, to move the zoomed-in view horizontally. 
 The refresh button on the left side refreshes the graph, thus updating the colour and label of previously selected outliers. Furthermore, it saves the data to a parquet file.
 The upper and lower limit of the y-axis also gets updated, when pressing the refresh button. 
 The limits are automatically set to the lowest and highest regular value. 
@@ -243,15 +244,15 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 \input{tables/36022-ie/36022-ie-7-number-summary-all.tex}
 \input{tables/36022-ie/36022-ie-7-number-summary-regular.tex}
 \input{tables/36022-ie/36022-ie-7-number-summary-outlier.tex}
-
+\newline
 In \autoref{figure:class-distribution-36022-ie} the class distribution is shown. The classes are not balanced, there are far more regular values than outliers. This needs to be kept in mind when choosing a performance metric.
+\clearpage
 \begin{figure}[htp]
     \centering
     \includegraphics{./plots/pdfs/36022-ie/outlier_class_distribution_36022-ie.pdf}
     \caption{Class distribution of Aghacashlaun - Aghacashlaun}
     \label{figure:class-distribution-36022-ie}
 \end{figure}
-
 \autoref{figure:boxplot-36022-ie} shows boxplots for all values, regular values and outlier values. The boxplots show, that the upper and lower whisker boundaries cannot be used to classify outliers reliably. Since there are many regular values that exceed the upper limit of the whisker, which is 1.5 times the \ac{IQR}.
 \begin{figure}[htp]
     \centering
@@ -259,8 +260,7 @@ In \autoref{figure:class-distribution-36022-ie} the class distribution is shown.
     \caption{Boxplot of Aghacashlaun - Aghacashlaun}
     \label{figure:boxplot-36022-ie}
 \end{figure}
-
-
+\newline
 In \autoref{figure:water-level-histogram-36022-ie} histograms of the different water levels are shown. The y-axis is scaled logarithmically, so less common values are also visible. The histogram shows, that values between 20 and 40 are most common and the higher the water level is the less common it becomes. \autoref{figure:water-level-delta-histogram-36022-ie} is quite similar, but instead of the water level, the difference in water level between two consecutive data points is used.
 \begin{figure}[htp]
     \centering 
@@ -268,14 +268,13 @@ In \autoref{figure:water-level-histogram-36022-ie} histograms of the different w
     \caption{Histogram of the water level of Aghacashlaun - Aghacashlaun}
     \label{figure:water-level-histogram-36022-ie}
 \end{figure}
-
 \begin{figure}[htp]
     \centering
     \includegraphics{./plots/pdfs/36022-ie/water_level_delta_histogram_36022-ie.pdf}
     \caption{Histogram of the water level delta of Aghacashlaun - Aghacashlaun}
     \label{figure:water-level-delta-histogram-36022-ie}
 \end{figure}
-
+\newline
 \autoref{figure:time-delta-histogram-36022-ie} shows the histogram of the time difference, in hours, between each data point. The largest gap in the data is 178 hours, which is about one week.
 \begin{figure}[htp]
     \centering
@@ -283,7 +282,7 @@ In \autoref{figure:water-level-histogram-36022-ie} histograms of the different w
     \caption{Histogram of the time delta (in hours) of Aghacashlaun - Aghacashlaun}
     \label{figure:time-delta-histogram-36022-ie}
 \end{figure}
-
+\newline
 In \autoref{figure:linechart-36022-ie} the water level over time is shown. This chart shows, that the water level usually oscillates between 20 and 100. \autoref{figure:linechart-zoomed-36022-ie} displays an example of subsequence outliers. Within one hour the water level rises by double the previous value. This is very unlikely, thus these values were classified as outliers. The reason, for  multiple consecutive outliers, with decreasing water levels over time, could be, that the station does not report the actual water level but a moving average over the last few recorded values. This would at least explain the pattern of outliers shown in \autoref{figure:linechart-zoomed-36022-ie}.
 \begin{figure}[htp]
     \centering
@@ -291,18 +290,15 @@ In \autoref{figure:linechart-36022-ie} the water level over time is shown. This 
     \caption{Line chart of Aghacashlaun - Aghacashlaun (whole data)}
     \label{figure:linechart-36022-ie}
 \end{figure}
-
 \begin{figure}[htp]
     \centering
     \includegraphics{./plots/pdfs/36022-ie/slice_linechart_36022-ie.pdf}
     \caption{Line chart  of Aghacashlaun - Aghacashlaun (2019-10-16 - 2019-10-19)}
     \label{figure:linechart-zoomed-36022-ie}
 \end{figure}
-
-
-\par
-Code: \cite{zelenayOutlierDetectionWater2022}
-\change{Add Code in appendix}
+\newline
+The code for the explorative data analysis can be found in the appendix (\autoref{listing:explorative-data-analysis}).
+% \change{Add Code in appendix}
 % \todo{add descriptions to tables and figures}
 \clearpage
 
@@ -389,12 +385,13 @@ The input data structure for the different approaches is a pandas DataFrame.\cit
     \item \verb|is_outlier|: true or false depending on if the value is an outlier (datatype: bool)
 \end{itemize}
 To test the performance of the models the column \verb|is_outlier| contains the ground truth, which was manually labelled. An example of the input data can be seen in \autoref{table:36022-ie-9head}.
-
 \input{tables/36022-ie/36022-ie-9head.tex}
+\newline
 To speed up the process of calculating the result of the outlier detection method ($|x_t - \hat{x}_t|$, the z-score or the modified z-score) is all done in one step and in the second step the result of this calculation is compared against a range of thresholds.
 \subsection{Mean Threshold}
 Calculating $\hat{x}_t$ using the mean for a pandas DataFrame \cite{PandasDocumentationPandas} is quite straightforward and is shown in \autoref{listing:mean-outlier-calculation}. To reduce the amount of duplicate code, the imports are only included in \autoref{listing:mean-outlier-calculation}.
-\begin{listing}
+\begin{listing}[htp]
+\small
 \begin{minted}[linenos]{python}
 from typing import Union
 
@@ -429,10 +426,11 @@ def mean_outlier_detection(input_df: pd.DataFrame,
 \caption{The first step of classifying outliers using the mean}
 \label{listing:mean-outlier-calculation}
 \end{listing}
-
+\clearpage
 \subsection{Median Threshold}
 The calculation of the median is quite similar to the mean. It is shown in \autoref{listing:median-outlier-calculation}.
-\begin{listing}
+\begin{listing}[htp]
+\small
 \begin{minted}[linenos]{python}
 def median_outlier_detection(input_df: pd.DataFrame,
                              window: Union[int, None],
@@ -461,11 +459,12 @@ def median_outlier_detection(input_df: pd.DataFrame,
 \caption{The first step of classifying outliers using the median}
 \label{listing:median-outlier-calculation}
 \end{listing}
-
+\clearpage
 % \subsection{\ac{MAD} Threshold}
 \subsection{MAD Threshold}
 In \autoref{listing:mad-outlier-calculation} an example of an implementation for calculating the \ac{MAD} is provided.
-\begin{listing}
+\begin{listing}[htp]
+\small
 \begin{minted}[linenos]{python}
 def mad_outlier_detection(input_df: pd.DataFrame,
                           window: Union[int, None],
@@ -497,10 +496,11 @@ def mad_outlier_detection(input_df: pd.DataFrame,
 \caption{The first step of classifying outliers using the \ac{MAD}}
 \label{listing:mad-outlier-calculation}
 \end{listing}
-
+\clearpage
 \subsection{Z-Score}
 \autoref{listing:z-score-outlier-calculation} shows how to calculate the z-score in Python.
-\begin{listing}
+\begin{listing}[htp]
+\small
 \begin{minted}[linenos]{python}
 def z_score_outlier_detection(input_df: pd.DataFrame,
                               window: Union[int, None],
@@ -535,10 +535,11 @@ def z_score_outlier_detection(input_df: pd.DataFrame,
 \caption{The first step of classifying outliers using the z-score}
 \label{listing:z-score-outlier-calculation}
 \end{listing}
-
+\clearpage
 \subsection{Modified z-score}
 The code for calculating the result of the modified z-score (using the \ac{MADN}) is shown in \autoref{listing:madn-z-score-outlier-calculation}.
-\begin{listing}
+\begin{listing}[htp]
+\small
 \begin{minted}[linenos]{python}
 def madn_z_score_outlier_detection(input_df: pd.DataFrame,
                                    window: Union[int, None],
@@ -581,7 +582,7 @@ def madn_z_score_outlier_detection(input_df: pd.DataFrame,
 
 \subsection{Preprocessing the Data}\label{subsection:data-preprocessing}
 In the preprocessing step outliers which extremely vary from the usual trend of the other values were removed. This was done by defining upper and lower limits for the data. If a value is not inside this limit it is removed from the dataset. The thought behind preprocessing the data was to increase the model performance by removing extreme outlier values from the beginning. The disadvantage of the preprocessing step is, that two limits need to be defined for each measurement station. The limits need to be chosen carefully. On the one hand, if the valid value range is too large, no extreme outliers are removed and the preprocessing is useless, on the other hand, if the valid value range is too small the preprocessing might remove valid values, which would indicate a possible flood. Thus it is also a good idea to regularly check and maybe update those limits.
-\par
+\newline
 The Python code for preprocessing the data can be found in the appendix in \autoref{listing:data-preprocessing}.
 % Core Url: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/preprocessing.ipynb}\todo{add code to appendix}
 
@@ -596,24 +597,23 @@ To find the best parameters a grid search was used. The first step was to calcul
     \item \textbf{common-id}: ``36022-ie'', ``39003-ie'', ``2386-ch'', ``42960105-de'', ``2720050000-de''
 \end{itemize}
 Due to the large number of unique combinations of parameters the size of the resulting files was quite large (multiple Gigabytes). The grid search was executed in parallel using multiprocessing, in order to speed up the process.
-\par
+\newline
 After the results of each parameter were calculated, for each file a range of thresholds was tested and the performance (confusion matrix and $F_1-score$) of this threshold and the parameters used were saved to a DataFrame. This was also conducted in parallel to decrease the runtime.
 % Develop different outlier detection methods in Python and calculate performance metrics for each
-\par
-The code of the grid search for different parameters can be found in the appendix in \autoref{listing:threshold-based-outlier-detection}.
-\todo{add code of analysing script}
+\newline
+The code of the grid search for different parameters can be found in the appendix in \autoref{listing:threshold-based-outlier-detection} and the code to get the prediction for different thresholds in \autoref{listing:calculate-outlier-detection-results}.
 % Url of Code: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/threshold_based_outlier_detection.py} \todo{include code in appendix}
 
 \section{Compare different Outlier Detection Approaches}
 As expected, using a centred window yields the best $F_1-score$. Furthermore, the methods with the best performance are the median and the \ac{MADN} z-score. While the median performed best with smaller window sizes (5-7) the modified z-score performed best with larger window sizes (22-28). Using the \ac{MAD} to calculate the $\hat{x_t}$ yields the worst performance.
-\par
+\newline
 \autoref{table:top-avg-predictions-summary} shows the top 5 average $F_1-scores$ of all stations tested. When using one set of parameters for different measurement stations the median performed best. Using the mean for $\hat{x_t}$ delivered the second-best performance when comparing shared parameters between all tested stations. However the average $F_1-score$ of the mean is only 0.47794, it was reached by using a centred window of size 5, a threshold of 18.87960 and not normalizing the data. Due to the heterogeneity of the fluctuations of the water levels for the different stations, it is not recommended to use the same parameters for different stations. Similar or equal parameters should only be used when the water levels of the two measurement stations behave similarly. Additionally, when using the same parameters for different stations the performance of those parameters should be looked at per station and not as an average of the  $F_1-scores$. This hinders the fact that one model performs perfectly ($F_1-score = 1$) and the other very poorly ($F_1-score = 0.5$). 
 % \todo{change average to harmonic mean?}
 \input{tables/top-avg-predictions-summary.tex}
 % \todo{compare parameters for different stations and check whether there is a parameter that can universally be used}
-\par
+\newline
 Using the preprocessing (described in \autoref{subsection:data-preprocessing}) usually resulted in lower performance, when comparing the highest $F_1-scores$ for both datasets (preprocessed and not preprocessed). The reason for this is, that the outliers removed by the two-sided filter were detected as outliers anyway. So just the number of \acp{TP} was reduced. This resulted in a slightly lower overall performance since the outliers were completely removed from the dataset in the preprocessing step.
-
+\clearpage
 % \todo{add specific examples for FP and FN???}
 % \todo{Add values of Precision and Recall for each O.D. Method}
 \subsubsection{Mean}
@@ -621,95 +621,92 @@ Using the preprocessing (described in \autoref{subsection:data-preprocessing}) u
 % f1 score: 0.6842105263157895
 % precision: 0.7268817204301076
 % recall: 0.6462715105162524
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering 
     \includegraphics{plots/pdfs/39003-ie/od_mean_39003-ie_all.pdf}
     \caption{Best performance of outlier detection using mean (Crana - Tullyarvan)}
     \label{figure:od-mean-39003-ie}
 \end{figure}
-
+\clearpage
 \subsubsection{Median}
 \autoref{figure:od-median-2720050000-de} shows the best performing outlier detection using the median. The $F_1-score$ is about 0.91, the $Precision$ is about 0.93 and the $Recall$ is about 0.89.
 % f1 score: 0.9051094890510949
 % precision: 0.9253731343283582
 % recall: 0.8857142857142857
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering 
     \includegraphics{plots/pdfs/2720050000-de/od_median_2720050000-de_all.pdf}
     \caption{Best performance of outlier detection using median (Sieg - Betzdorf)}
     \label{figure:od-median-2720050000-de}
 \end{figure}
-
+\clearpage
 \subsubsection{MAD}
 \autoref{figure:od-mad-42960105-de} shows the best performing outlier detection using the \ac{MAD}. The $F_1-score$ is about 0.45, the $Precision$ is about 0.53 and the $Recall$ is 0.4. 
 % f1 score: 0.45454545454545453
 % precision: 0.5263157894736842
 % recall: 0.4
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering 
     \includegraphics{plots/pdfs/42960105-de/od_mad_42960105-de_all.pdf}
     \caption{Best performance of outlier detection using \ac{MAD} (Losse - Helsa)}
     \label{figure:od-mad-42960105-de}
 \end{figure}
-
+\clearpage
 \subsubsection{Z-score}
 \autoref{figure:od-z-score-39003-ie} shows the best performing outlier detection using z-score. The $F_1-score$ is about 0.68, the $Precision$ is about 0.80 and the $Recall$ is about 0.59. In \autoref{figure:od-madn-z-score-36022-ie-zoomed} examples for \ac{TP}, \ac{TN}, \ac{FN} and \ac{FP} are shown.
 % f1 score: 0.6776677667766777
 % precision: 0.7979274611398963
 % recall: 0.5889101338432122
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering 
     \includegraphics{plots/pdfs/39003-ie/od_z-score_39003-ie_all.pdf}
     \caption{Best performance of outlier detection using z-score (Crana - Tullyarvan)}
     \label{figure:od-z-score-39003-ie}
 \end{figure}
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering 
     \includegraphics{plots/pdfs/39003-ie/od_z-score_39003-ie_zoomed.pdf}
     \caption{Best performance of outlier detection using z-score (Crana - Tullyarvan) zoomed in}
     \label{figure:od-z-score-39003-ie-zoomed}
 \end{figure}
+\clearpage
 \subsubsection{MADN-z-score}
 \autoref{figure:od-madn-z-score-36022-ie} shows the best performing outlier detection using \ac{MADN}-z-score. The $F_1-score$ is about 0.79, the $Precision$ is about 0.75 and the $Recall$ is about 0.84. In \autoref{figure:od-madn-z-score-36022-ie-zoomed} examples for \ac{TP}, \ac{TN}, \ac{FN} and \ac{FP} are shown.
 % f1 score: 0.7892049598832969
 % precision: 0.7451790633608816
 % recall: 0.8387596899224806
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering 
     \includegraphics{plots/pdfs/36022-ie/od_madn-z-score_36022-ie_all.pdf}
     \caption{Best performance of outlier detection using \ac{MADN}-z-score (Aghacashlaun - Aghacashlaun)}
     \label{figure:od-madn-z-score-36022-ie}
 \end{figure}
-
-\begin{figure}[htp]
+\begin{figure}[H]
     \centering 
     \includegraphics{plots/pdfs/36022-ie/od_madn-z-score_36022-ie_zoomed.pdf}
     \caption{Best performance of outlier detection using \ac{MADN}-z-score (Aghacashlaun - Aghacashlaun) zoomed in}
     \label{figure:od-madn-z-score-36022-ie-zoomed}
 \end{figure}
-
+\clearpage
 \subsection{Station Aghacashlaun, Aghacashlaun (36022-ie)}
 \autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centred moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed about equally well, regardless of the fact, that the data is normalized or not.
 % \todo{think of explanation for that.}
 % \todo{change mad-z-score to madn-z-score}
 \input{tables/36022-ie/36022-ie-top-predictions-summary.tex}
-
+\clearpage
 \subsection{Station Murg, Frauenfeld (2386-ch)}
 In \autoref{table:2386-ch-top-predictions-summary} the top three predictions per model for normalized and not normalized data are shown. The outlier detection for this station has the worst performance among those tested. The result of this model is shown in \autoref{figure:od-result-example-2386-ch}. Every value above the threshold is classified as an outlier. Every value below the threshold is classified as a regular value.
-
+\input{tables/2386-ch/2386-ch-top-predictions-summary.tex}
 \begin{figure}[htp]
     \centering 
     \includegraphics{plots/pdfs/2386-ch/od_result_median_2386-ch_all.pdf}
     \caption{Result of median-based outlier detection Murg - Frauenfeld}
     \label{figure:od-result-example-2386-ch}
 \end{figure}
-
-
-\input{tables/2386-ch/2386-ch-top-predictions-summary.tex}
-
+\clearpage
 \subsection{Station Sieg, Betzdorf (2720050000-de)}
 In \autoref{table:2720050000-de-top-predictions-summary} the top three predictions per model for normalized and not normalized data are shown. With an $F_1-score$ of 0.905109 this station had the best performance. The result of this model is shown in \autoref{figure:od-result-example-202720050000-de}. Every value above the threshold is classified as an outlier. Between 2018 and 2019 an example of an \ac{FP} can be seen (the orange values above the threshold).
-
+\input{tables/2720050000-de/2720050000-de-top-predictions-summary.tex}
 \begin{figure}[htp]
     \centering 
     \includegraphics{plots/pdfs/2720050000-de/od_result_median_2720050000-de_all.pdf}
@@ -717,8 +714,7 @@ In \autoref{table:2720050000-de-top-predictions-summary} the top three predictio
     \label{figure:od-result-example-202720050000-de}
 \end{figure}
 
-\input{tables/2720050000-de/2720050000-de-top-predictions-summary.tex}
-
+\clearpage
 \subsection{Station Losse, Helsa (42960105-de)}
 In \autoref{table:42960105-de-top-predictions-summary} the top three predictions per model for normalized and not normalized data are shown.
 \input{tables/42960105-de/42960105-de-top-predictions-summary.tex}

@@ -1,23 +1,37 @@
 \chapter{Appendix}
-Basically include the whole repo: \url{https://github.com/cellularegg/bachelor-thesis-code}
+% Basically include the whole repo: \url{https://github.com/cellularegg/bachelor-thesis-code}
 % \section{Code}
 \section{Python Code}
 \subsection{Manual outlier detection}
 {\scriptsize
 \inputminted[linenos]{python}{./code/manual_outlier_detection.py}
 \captionof{listing}{Manual Outlier Detection Webapp using Dash \cite{zelenayOutlierDetectionWater2022}\label{listing:manual-outlier-selection}}}
+\clearpage
+\subsection{Explorative Data Analysis}
+{\scriptsize
+\inputminted[linenos]{python}{./code/shared_logic.py}
+\captionof{listing}{Helper method to size plots \cite{zelenayOutlierDetectionWater2022}\label{listing:shared-logic}}}
+
+{\scriptsize
+\inputminted[linenos]{python}{./code/explorative_data_analysis.py}
+\captionof{listing}{Explorative Data Analysis \cite{zelenayOutlierDetectionWater2022}\label{listing:explorative-data-analysis}}}
 
 \subsection{Preprocessing}
 {\scriptsize
 \inputminted[linenos]{python}{./code/preprocessing.py}
 \captionof{listing}{Data preprocessing code in Python \cite{zelenayOutlierDetectionWater2022}\label{listing:data-preprocessing}}}
 
-\section{Outlier Detection Methods Implementation}
+\subsection{Outlier Detection Methods Implementation}
 {\scriptsize
 \inputminted[linenos]{python}{./code/outlier_detection_methods.py}
 \captionof{listing}{Implementation of Outlier Detection Methods \cite{zelenayOutlierDetectionWater2022}\label{listing:outlier-detection-methods}}}
 
-\section{Parameter Grid Search}
+\subsection{Parameter Grid Search}
 {\scriptsize
 \inputminted[linenos]{python}{./code/threshold_based_outlier_detection.py}
 \captionof{listing}{Threshold based outlier detection \cite{zelenayOutlierDetectionWater2022}\label{listing:threshold-based-outlier-detection}}}
+
+\subsection{Calculate Outlier Detection Results}
+{\scriptsize
+\inputminted[linenos]{python}{./code/calculate_outlier_detection_results.py}
+\captionof{listing}{Calculate the outlier detection results for different thresholds \cite{zelenayOutlierDetectionWater2022}\label{listing:calculate-outlier-detection-results}}}
