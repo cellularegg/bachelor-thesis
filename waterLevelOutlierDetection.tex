@@ -136,7 +136,7 @@ An example request would be: \url{https://api.pegelalarm.at/api/station/1.1/heig
 To test and tune the outlier detection methods the entire history of data was used. The granularity of the data usually is hourly up to the last three months of data. There are a few exceptions, where the granularity is not hourly, because either one or a few datapoints are missing. For the last three months the granularity is ``raw'', which is different for each station. Additionally the base (where the sensor reports water level equals zero) also differs per station. Some station have an arbitrary zero level whereas some stations have the sea level as a base. Thus the water level does not actually reflect the actual height, or depth, of the water. Instead it represents the relative water level to a specific height.
 \par
 The following water level measurement stations were used to test the outlier detection methods:
-\change{Check and maybe remove automatic hyphenation}
+% \change{Check and maybe remove automatic hyphenation}
 % \begin{itemize}
 %     % \item List of station addresses \todo{add final stations} 
 %     \todo{add location description to station list}
@@ -178,7 +178,7 @@ The following water level measurement stations were used to test the outlier det
 % \todo{add examples of outliers in the data}
 % \todo{Describe how the outliers are stored?}
 % Show cases of outliers in the data and manually classify them. (Also define a way/data structure to classify outliers for time series data) \todo{Remove this}
-In order to speed up the manual labeling of outliers a program was written. The program is a Plotly Dash \cite{DashDocumentationUser} \change{Which reference to add? Website, Documentation or GitHub?} web application which displays the water level data as a scatter chart. 
+In order to speed up the manual labeling of outliers a program was written. The program is a Plotly Dash \cite{DashDocumentationUser} web application which displays the water level data as a scatter chart. 
 By clicking the datapoints in the chart the user is able to toggle the datapoint as an outlier or back to a regular value. 
 In Listing \ref{listing:manual-outlier-selection} the source code of the Dash application is shown. 
 In \autoref{figure:manual-outlier-selection} the Website of the Python app is shown, the red dots between 25 and October 28 are already classified outliers. Below the chart a rangeslider is located, to move the zoomed in view horizontally. 
@@ -206,9 +206,12 @@ Without the automatic scaling of the y-axis, detecting other outliers with a sma
 % \label{code:manual-outlier-selection}
 % \end{listing}
 
-\subsubsection{Manual Outlier Detection Webapp using Dash} \change{Move do Appendix}
-\inputminted[linenos]{python}{./code/manual_outlier_detection.py}
-\captionof{listing}{Manual Outlier Detection Webapp using Dash\label{listing:manual-outlier-selection}}
+\subsubsection{Manual Outlier Detection Webapp using Dash}
+%  \change{Move do Appendix}
+The Python code for the webapp can be found in the appendix (\autoref{listing:manual-outlier-selection})
+% \inputminted[linenos]{python}{./code/manual_outlier_detection.py}
+% % {\scriptsize } Fuer kleiner schriftgroesse
+% \captionof{listing}{Manual Outlier Detection Webapp using Dash\label{listing:manual-outlier-selection}}
 % \todo{add comments to code}
 
 \section{Explorative Data Analysis}
@@ -299,6 +302,7 @@ In \autoref{figure:linechart-36022-ie} the water level over the time is shown. T
 
 \par
 Code: \cite{zelenayOutlierDetectionWater2022}
+\change{Add Code in appendix}
 % \todo{add descriptions to tables and figures}
 \clearpage
 
@@ -578,7 +582,8 @@ def madn_z_score_outlier_detection(input_df: pd.DataFrame,
 \subsection{Preprocessing the Data}\label{subsection:data-preprocessing}
 In the preprocessing step outliers which extremely vary from the usual trend of the other values were removed. This was done by defining and upper and lower limit for the data. If a value is not inside this limit it is removed from the dataset. The thought behind preprocessing the data was to increase the model performance by removing extreme outlier values from the beginning. The disadvantage of the preprocessing step is, that two limits need to be defined for each measurement station. The limits need to be chosen carefully. On the one hand, if the valid value range is too large, no extreme outliers are removed and the preprocessing is useless, on the other hand if the valid value range is too small the preprocessing might remove valid values, which would indicate a possible flood. Thus it is also a good idea to regularly check and maybe update those limits.
 \par
-Core Url: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/preprocessing.ipynb}\todo{add code to appendix}
+The Python code for preprocessing the data can be found in the appendix in \autoref{listing:data-preprocessing}.
+% Core Url: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/preprocessing.ipynb}\todo{add code to appendix}
 
 \subsection{Finding Parameters}
 To find the best parameters a grid search was used. The first step was to calculate the results for different methods, window sizes and types (centered an non centered). For each unique parameter combination the result dataframe was stored as a file, where the filename provided information about the parameters. An example for a filename would be ``\verb|12_cw_median.parquet|'', where ``\verb|12|'' is the window size, ``\verb|cw|'' stands for center window (``\verb|nocw|'' is for no center window) and ``\verb|median|'' is the method used. This was done for every unique combination of parameters. The possible values for each parameter, that was used, is listed below.
@@ -595,7 +600,8 @@ Due to the large number of unique combinations of parameters the size of the res
 After the results of each parameter was calculated, for each file a range of thresholds was tested and the performance (confusion matrix and $F_1-score$) of this threshold and the parameters used were saved to a DataFrame. This was also conducted in parallel to decrease the runtime.
 % Develop different outlier detection methods in Python and calculate performance metrics for each
 \par
-Url of Code: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/threshold_based_outlier_detection.py} \todo{include code in appendix}
+The code of the grid search for different parameters can be found in the appendix in \autoref{listing:threshold-based-outlier-detection}.
+% Url of Code: \url{https://github.com/cellularegg/bachelor-thesis-code/blob/main/threshold_based_outlier_detection.py} \todo{include code in appendix}
 
 \section{Compare different Outlier Detection Approaches}
 As expected, using a centered window yields the best $F_1-score$. Furthermore the methods with the best performance are the median and the \ac{MADN} z-score. While the median performed best with smaller window sizes (5-7) the modified z-score performed best with larger window sizes (22-28). Using the \ac{MAD} to calculate the $\hat{x_t}$ yields the worst performance.
@@ -607,10 +613,13 @@ As expected, using a centered window yields the best $F_1-score$. Furthermore th
 \par
 Using the preprocessing (described in \autoref{subsection:data-preprocessing}) usually resulted in a lower performance, when comparing the hightest $F_1-scores$ for both datasets (preprocessed and not preprocessed). The reason for this is, that the outliers removed by the two sided filter were detected as outliers anyway. So just the number of \acp{TP} was reduced. Thus resulting in a slightly lower overall performance, since the outliers were completely removed from the dataset in the preprocessing step.
 
-\todo{add specific examples for FP and FN???}
-\todo{Add values of Precision and Recall for each O.D. Method}
+% \todo{add specific examples for FP and FN???}
+% \todo{Add values of Precision and Recall for each O.D. Method}
 \subsubsection{Mean}
-\autoref{figure:od-mean-39003-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.68. % 0.6842105263157895
+\autoref{figure:od-mean-39003-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.68, the $Precision$ is about 0.73 and the $Recall$ is about 0.65.
+% f1 score: 0.6842105263157895
+% precision: 0.7268817204301076
+% recall: 0.6462715105162524
 \begin{figure}[htp]
     \centering 
     \includegraphics{plots/pdfs/39003-ie/od_mean_39003-ie_all.pdf}
@@ -619,15 +628,22 @@ Using the preprocessing (described in \autoref{subsection:data-preprocessing}) u
 \end{figure}
 
 \subsubsection{Median}
-\autoref{figure:od-median-2720050000-de} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.91. % 0.9051094890510949
+\autoref{figure:od-median-2720050000-de} shows the best performing outlier detection using median. The $F_1-score$ is about 0.91, the $Precision$ is about 0.93 and the $Recall$ is about 0.89.
+% f1 score: 0.9051094890510949
+% precision: 0.9253731343283582
+% recall: 0.8857142857142857
 \begin{figure}[htp]
     \centering 
     \includegraphics{plots/pdfs/2720050000-de/od_median_2720050000-de_all.pdf}
     \caption{Best performance of outlier detection using median (Sieg - Betzdorf)}
     \label{figure:od-median-2720050000-de}
 \end{figure}
+
 \subsubsection{MAD}
-\autoref{figure:od-mad-42960105-de} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.45. % 0.45454545454545453
+\autoref{figure:od-mad-42960105-de} shows the best performing outlier detection using \ac{MAD}. The $F_1-score$ is about 0.45, the $Precision$ is about 0.53 and the $Recall$ is 0.4. 
+% f1 score: 0.45454545454545453
+% precision: 0.5263157894736842
+% recall: 0.4
 \begin{figure}[htp]
     \centering 
     \includegraphics{plots/pdfs/42960105-de/od_mad_42960105-de_all.pdf}
@@ -636,25 +652,43 @@ Using the preprocessing (described in \autoref{subsection:data-preprocessing}) u
 \end{figure}
 
 \subsubsection{Z-score}
-\autoref{figure:od-z-score-39003-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.68. % 0.6776677667766777
+\autoref{figure:od-z-score-39003-ie} shows the best performing outlier detection using z-score. The $F_1-score$ is about 0.68, the $Precision$ is about 0.80 and the $Recall$ is about 0.59. In \autoref{figure:od-madn-z-score-36022-ie-zoomed} examples for \ac{TP}, \ac{TN}, \ac{FN} and \ac{FP} are shown.
+% f1 score: 0.6776677667766777
+% precision: 0.7979274611398963
+% recall: 0.5889101338432122
 \begin{figure}[htp]
     \centering 
     \includegraphics{plots/pdfs/39003-ie/od_z-score_39003-ie_all.pdf}
-    \caption{Best performance of outlier detection using mad (Crana - Tullyarvan)}
+    \caption{Best performance of outlier detection using z-score (Crana - Tullyarvan)}
     \label{figure:od-z-score-39003-ie}
 \end{figure}
-
-\subsubsection{MADN-z-score}
-\autoref{figure:od-madn-z-score-36022-ie} shows the best performing outlier detection using mean. The $F_1-score$ is about 0.79. % 0.7892049598832969
 \begin{figure}[htp]
     \centering 
-    \includegraphics{plots/pdfs/36022-ie/od_mad-z-score_36022-ie_all.pdf}
+    \includegraphics{plots/pdfs/39003-ie/od_z-score_39003-ie_zoomed.pdf}
+    \caption{Best performance of outlier detection using z-score (Crana - Tullyarvan) zoomed in}
+    \label{figure:od-z-score-39003-ie-zoomed}
+\end{figure}
+\subsubsection{MADN-z-score}
+\autoref{figure:od-madn-z-score-36022-ie} shows the best performing outlier detection using \ac{MADN}-z-score. The $F_1-score$ is about 0.79, the $Precision$ is about 0.75 and the $Recall$ is about 0.84. In \autoref{figure:od-madn-z-score-36022-ie-zoomed} examples for \ac{TP}, \ac{TN}, \ac{FN} and \ac{FP} are shown.
+% f1 score: 0.7892049598832969
+% precision: 0.7451790633608816
+% recall: 0.8387596899224806
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/36022-ie/od_madn-z-score_36022-ie_all.pdf}
     \caption{Best performance of outlier detection using \ac{MADN}-z-score (Aghacashlaun - Aghacashlaun)}
     \label{figure:od-madn-z-score-36022-ie}
 \end{figure}
 
+\begin{figure}[htp]
+    \centering 
+    \includegraphics{plots/pdfs/36022-ie/od_madn-z-score_36022-ie_zoomed.pdf}
+    \caption{Best performance of outlier detection using \ac{MADN}-z-score (Aghacashlaun - Aghacashlaun) zoomed in}
+    \label{figure:od-madn-z-score-36022-ie-zoomed}
+\end{figure}
+
 \subsection{Station Aghacashlaun, Aghacashlaun (36022-ie)}
-\autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centered moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed equally well regardless of the fact that the data is normalized or not.
+\autoref{table:36022-ie-top-predictions-summary} shows the top three predictions per model for normalized and not normalized data. It clearly pictures, that methods using a centered moving window perform better. It is also interesting to see that the \ac{MADN} z-score and the regular z-score performed about equally well, regardless of the fact, that the data is normalized or not.
 % \todo{think of explanation for that.}
 % \todo{change mad-z-score to madn-z-score}
 \input{tables/36022-ie/36022-ie-top-predictions-summary.tex}
